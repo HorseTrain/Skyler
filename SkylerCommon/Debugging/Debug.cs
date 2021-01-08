@@ -6,13 +6,14 @@ namespace SkylerCommon.Debugging
 {
     public static class Debug
     {
+        //TODO: Add importance checks to not log everything.
         static void LogWithColor(object message,ConsoleColor color = ConsoleColor.White)
         {
             Console.ForegroundColor = color;
 
             //TODO: Add time markers.
 
-            Console.WriteLine(message);
+            //Console.WriteLine(message);
 
             Console.ForegroundColor = ConsoleColor.White;
         }

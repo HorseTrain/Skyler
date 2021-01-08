@@ -11,7 +11,7 @@ namespace SkylerHLE.Horizon.Service.HID
     {
         public static ulong HidCreateAppletResource(CallContext context)
         {
-            SharedMemory HidData = (SharedMemory)Switch.MainOS.Handles[(uint)Switch.MainOS.HidHandle];
+            SharedMemory HidData = (SharedMemory)Switch.MainOS.Handles[(uint)Switch.MainOS.HidHandle.ID];
 
             Helper.Make(context, new IAppletResource(HidData));
 

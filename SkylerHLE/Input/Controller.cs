@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SkylerHLE.Input
 {
-    class TODO
+    public class Controller
     {
+        //TODO:
     }
 }

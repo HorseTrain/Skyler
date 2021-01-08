@@ -12,6 +12,7 @@ namespace SkylerHLE.Horizon.Handles
         public ulong ID                 { get; set; }
         public ulong RealPosition       { get; set; }
         public ulong VirtualPosition    { get; set; }
+        public bool Mapped              { get; set; }
 
         public SharedMemory(ulong VirtualPosition) 
         {
@@ -20,5 +21,8 @@ namespace SkylerHLE.Horizon.Handles
 
             ID = Switch.MainOS.Handles.AddObject(this);
         }
+
+        public void Map() => Mapped = true;
+        public void Unmap() => Mapped = false;
     }
 }

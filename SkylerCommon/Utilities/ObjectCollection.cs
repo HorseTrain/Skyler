@@ -31,21 +31,41 @@ namespace SkylerCommon.Utilities
 
         public ulong AddObject(object obj)
         {
-            ulong ID = GetID();
+            lock (Objects)
+            {
+                ulong ID = GetID();
 
-            Objects.Add(ID,obj);
+                Objects.Add(ID, obj);
 
-            return ID;
+                return ID;
+            }
         }
 
-        public void RemoveObject(ulong ID) => Objects.Remove(ID);
+        public void RemoveObject(ulong ID)
+        {
+            lock (Objects)
+            {
+                Objects.Remove(ID);
+            }
+        }
         public object GetObject(ulong ID) => Objects[ID];
 
         public void SwapObject(ulong Handle, object obj)
         {
-            Objects[Handle] = obj;
+            lock (Objects)
+            {
+                Objects[Handle] = obj;
+            }
         }
 
         public object this[ulong index] => GetObject(index);
+
+        public void DeleteObject(ulong index)
+        {
+            lock (Objects)
+            {
+                Objects.Remove(index);
+            }
+        }
     }
 }

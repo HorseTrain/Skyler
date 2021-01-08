@@ -26,7 +26,7 @@ namespace SkylerHLE.Horizon.Service.HID
 
         public ulong GetSharedMemoryHandle(CallContext context)
         {
-            context.response.HandleDescriptor = HandleDescriptor.MakeCopy((uint)Switch.MainOS.HidHandle);
+            context.response.HandleDescriptor = HandleDescriptor.MakeCopy((uint)Switch.MainOS.HidHandle.ID);
 
             return 0;
         }

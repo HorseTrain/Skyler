@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkylerCPU", "SkylerCPU\Skyl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkylerShader", "SkylerShader\SkylerShader.csproj", "{E52EB04B-7EC3-43A3-8A5B-7DA29C418692}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkylerGraphics", "SkylerGraphics\SkylerGraphics.csproj", "{F27FC7D2-A82B-442C-BDD7-8B333FA9BC99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkylerGraphics", "SkylerGraphics\SkylerGraphics.csproj", "{F27FC7D2-A82B-442C-BDD7-8B333FA9BC99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

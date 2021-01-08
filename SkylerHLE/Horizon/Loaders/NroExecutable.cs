@@ -18,6 +18,7 @@ namespace SkylerHLE.Horizon.Loaders
         public CodeSource Data      { get; set; }
 
         public uint Mod0Offset      { get; set; }
+        public uint BssSize         { get; set; }
 
         public ulong Size => (ulong)(Text.Data.Length + RoData.Data.Length + Data.Data.Length);
 
@@ -42,6 +43,7 @@ namespace SkylerHLE.Horizon.Loaders
             LoadSource(Text, reader.ReadStruct<NroCodeSource>(),reader);
             LoadSource(RoData, reader.ReadStruct<NroCodeSource>(), reader);
             LoadSource(Data, reader.ReadStruct<NroCodeSource>(), reader);
+            BssSize = reader.ReadStruct<uint>();
         }
 
         void LoadSource(CodeSource Des, NroCodeSource Source,BinaryReader reader)

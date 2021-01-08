@@ -14,9 +14,14 @@ namespace SkylerHLE.Horizon.Service
     //TODO: Orginize services better
     public static class ServiceCollection
     {
+        //TODO: Move cretion services into a string switch case.
         public static Dictionary<(string, ulong), ServiceCall> Calls = new Dictionary<(string, ulong), ServiceCall>()
         {
+            {("appletOE",0),    appletoe.OpenApplicationProxy},
+
             {("hid",0),         hid.HidCreateAppletResource},
+
+            {("lm",0),          lm.OpenLogger},
 
             {("sm:",0),         sm.InitService },
             {("sm:",1),         sm.GetService },

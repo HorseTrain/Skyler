@@ -44,10 +44,12 @@ namespace SkylerHLE.Horizon.Kernel.SVC
         //<-- https://switchbrew.org/wiki/SVC#SetHeapSize -->
         public static void SetHeapSize(ObjectIndexer<ulong> X)
         {
-            ulong Size = X[0];
+            ulong Size = X[1];
 
             //TODO: Compare size with process size, then unmap if size is greater.
             Switch.Memory.MapMemory(MemoryMetaData.HeapBase,Size,MemoryPermission.ReadAndWrite,MemoryType.MappedMemory);
+
+            MemoryMetaData.CurrentHeapSize = Size;
 
             X[1] = MemoryMetaData.HeapBase;
             X[0] = 0;
@@ -56,6 +58,15 @@ namespace SkylerHLE.Horizon.Kernel.SVC
         //<-- https://switchbrew.org/wiki/SVC#SetMemoryAttribute -->
         public static void SetMemoryAttribute(ObjectIndexer<ulong> X)
         {
+            ulong Address = X[0];
+            ulong Size = X[1];
+            ulong Mask = X[2];
+            ulong Value = X[3];
+
+            Debug.LogWarning("Called Stubbed SVC \"SetMemoryAttribute\"");
+            
+            //TODO:
+
             X[0] = 0;
         }
 
@@ -64,7 +75,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
         {
             ulong Address = X[1];
             ulong Size = X[2];
-            ulong Permission = X[3]; //TODO: find out if this has any use cases.
+            ulong Permission = X[3]; //TODO: find out if this has any uses.
 
             //TODO: Reprotect memory ?
 
@@ -77,7 +88,38 @@ namespace SkylerHLE.Horizon.Kernel.SVC
         //<-- https://switchbrew.org/wiki/SVC#MapSharedMemory -->
         public static void MapSharedMemory(ObjectIndexer<ulong> X)
         {
-            //TODO:
+            ulong Handle = X[0];
+            ulong Source = X[1];
+            ulong Size = X[2];
+            ulong Perm = X[3];
+
+            if (!MemoryManager.IsValidPosition(Source))
+            {
+                Debug.LogError("",true);
+            }
+
+            SharedMemory sharedMemory = (SharedMemory)MainOS.Handles[Handle];
+
+            //TODO: Chedk for null 
+
+            if (sharedMemory != null)
+            {
+                Switch.Memory.MapMemory(Source,Size,(MemoryPermission)Perm,MemoryType.SharedMemory);
+
+                //TODO: Maybe clear map ?
+
+                sharedMemory.VirtualPosition = Source;
+                sharedMemory.Map();
+            }
+
+            X[0] = 0;
+        }
+
+        //<-- https://switchbrew.org/wiki/SVC#SignalProcessWideKey -->
+        public static void SignalProcessWideKey(ObjectIndexer<ulong> X)
+        {
+            ulong Address = X[0];
+            ulong Value = X[1];
 
             X[0] = 0;
         }

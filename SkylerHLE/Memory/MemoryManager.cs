@@ -104,13 +104,16 @@ namespace SkylerHLE.Memory
         public ref PageEntry RequestPage(ulong Address) => ref RequestPage(RequestPageWithIndex(Address >> MemoryMetaData.PageBit));
 
         public ref PageEntry RequestPage((ulong,ulong) Pointer)
-        {         
-            if (PageTables[Pointer.Item1] == null)
+        {
+            lock (PageTables)
             {
-                PageTables[Pointer.Item1] = new PageTable(Pointer.Item1);
-            }
+                if (PageTables[Pointer.Item1] == null)
+                {
+                    PageTables[Pointer.Item1] = new PageTable(Pointer.Item1);
+                }
 
-            return ref PageTables[Pointer.Item1].Entries[Pointer.Item2];
+                return ref PageTables[Pointer.Item1].Entries[Pointer.Item2];
+            }
         }
 
         void AllocateSwitchBlock()

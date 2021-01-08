@@ -13,5 +13,6 @@ namespace SkylerHLE.Horizon.Loaders
         public CodeSource Data      { get; set; }
 
         public uint Mod0Offset      { get; set; }
+        public uint BssSize         { get; set; }
     }
 }

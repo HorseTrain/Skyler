@@ -10,7 +10,7 @@ namespace SkylerHLE.Horizon
 
         public Scheduler scheduler      { get; set; }
 
-        public ulong HidHandle { get; set; }
+        public SharedMemory HidHandle   { get; set; }
 
         public HorizonOS()
         {
@@ -19,7 +19,7 @@ namespace SkylerHLE.Horizon
             Handles = new ObjectCollection();
             scheduler = new Scheduler();
 
-            HidHandle = new SharedMemory(0).ID;
+            HidHandle = new SharedMemory(0);
         }
 
         public Process OpenProcess()

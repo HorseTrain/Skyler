@@ -19,6 +19,8 @@ namespace SkylerHLE.Horizon.Kernel.SVC
 
             KSession session = new KSession(Name, true);
 
+            Debug.Log($"Connected to NamePort: {Name}");
+
             X[0] = 0;
             X[1] = session.ID;
         }

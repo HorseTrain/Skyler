@@ -1,4 +1,5 @@
 ﻿using SkylerCPU;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using static SkylerHLE.Switch;
@@ -19,15 +20,15 @@ namespace SkylerHLE.Horizon.Execution
 
         public Dictionary<ulong, Thread> HostThreads { get; set; }
 
-        public KThread CreateThread<T>(T cpu,Process process,ulong PC, ulong SP, ulong TLS) where T : CpuContext
+        public KThread CreateThread<T>(T cpu,Process process,ulong PC, ulong SP, ulong TLS,ulong Arguments,ulong Priority) where T : CpuContext
         {
-            KThread Guest = new KThread(cpu, process);
+            KThread Guest = new KThread(cpu, process,Priority);
 
             Guest.Cpu.PC = PC;
             Guest.Cpu.SP = SP;
             Guest.Cpu.tpidrro_el0 = TLS;
 
-            Guest.Cpu.X[0] = 0;
+            Guest.Cpu.X[0] = Arguments;
             Guest.Cpu.X[1] = Guest.ID;
 
             return Guest;

@@ -17,11 +17,15 @@ namespace SkylerHLE.Horizon.Service
             {
                 context.response.Responses.Add((int)dom.CreateObject(Obj));
             }
-            else
+            else if (Obj is ICommandObject)
             {
                 KObject data = new KObject(context.session,Obj);
 
                 context.response.HandleDescriptor = HandleDescriptor.MakeMove((uint)data.ID);
+            }
+            else
+            {
+                Debug.LogError("Invalid Object!!");
             }
         }
     }

@@ -1,5 +1,8 @@
-﻿using SkylerCommon.Globals;
+﻿using SkylerCommon.Debugging;
+using SkylerCommon.Globals;
 using SkylerCommon.Memory;
+using SkylerHLE.Horizon.IPC;
+using SkylerHLE.Horizon.Service.Sessions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,6 +22,7 @@ namespace SkylerHLE.Horizon.Service.VI
             {1010,  OpenDisplay },
             {2101,  SetLayerScalingMode },
             {2020,  OpenLayer},
+            {5202,  GetDisplayVsyncEvent}
         };
 
 
@@ -73,6 +77,22 @@ namespace SkylerHLE.Horizon.Service.VI
             writer.WriteStruct(Parcel);
 
             context.Writer.Write((ulong)Parcel.Length);
+
+            return 0;
+        }
+
+        public static ulong GetDisplayVsyncEvent(CallContext context)
+        {
+            string Name = context.Reader.ReadString();
+
+            KEvent Event = new KEvent();
+
+            context.response.HandleDescriptor = HandleDescriptor.MakeCopy((uint)Event.ID);
+
+            context.PrintStubbed();
+            //TODO:
+
+            Debug.LogError("",true);
 
             return 0;
         }

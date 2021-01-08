@@ -31,6 +31,11 @@ namespace SkylerHLE.Horizon.Kernel.IPC
             {
                 case CommandType.Request: Request.HandleIPCRequest(context); break;
                 case CommandType.Control: Control.HandleControl(context); break;
+                case CommandType.CloseSession:
+                    
+                    //TODO:
+
+                    break;
                 default: throw new NotImplementedException();
             }
 

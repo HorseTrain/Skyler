@@ -19,7 +19,7 @@ namespace Skyler
             Process process = MainOS.OpenProcess();
 
 #if (DEBUG)
-            string path = @"D:\Games\Roms\SMOROMFS";
+            string path = args[0];
 #else
             string path = args[0];
 #endif

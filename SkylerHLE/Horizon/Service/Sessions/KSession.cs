@@ -35,6 +35,8 @@ namespace SkylerHLE.Horizon.Service.Sessions
             }
         }
 
+        public void Close() => IsOpen = false;
+
         public void Open() => IsOpen = true;
     }
 }

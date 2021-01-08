@@ -19,7 +19,8 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
             switch (CommandID)
             {
                 case 0: ConvertKSession(context); break;
-                default: Debug.ThrowNotImplementedException(); break;
+                case 3: ResponseHandler.FillResponse(context.response,0,0x500); break; //What is this?
+                default: Debug.ThrowNotImplementedException(CommandID.ToString()); break;
             }
         }
 

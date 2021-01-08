@@ -30,5 +30,8 @@ namespace SkylerHLE.Memory
 
         public static ulong PageRoundUp(ulong Address) => (Address + PageMask) & ~PageMask;
         public static ulong PageRoundDown(ulong Address) => Address & ~PageMask;
+
+        //Statc
+        public static ulong CurrentHeapSize { get; set; }
     }
 }

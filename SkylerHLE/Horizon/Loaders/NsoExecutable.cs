@@ -17,6 +17,7 @@ namespace SkylerHLE.Horizon.Loaders
         public CodeSource Data      { get; set; }
         
         public uint Mod0Offset      { get; set; }
+        public uint BssSize         { get; set; }
         public ulong Size => (ulong)(Text.Data.Length + RoData.Data.Length + Data.Data.Length);
 
         struct NsoSegmentHeader
@@ -58,6 +59,10 @@ namespace SkylerHLE.Horizon.Loaders
             reader.Advance(4);
 
             WriteSourceToProgram(reader.ReadStruct<NsoSegmentHeader>(), ((Flags >> 3) & 1) == 0,    DataSize,   reader,     Data);
+
+            reader.Seek(0x3C);
+
+            BssSize = reader.ReadStruct<uint>();
 
             reader = new BinaryReader(Text.Data);
 

@@ -51,7 +51,16 @@ namespace SkylerHLE.Horizon
             Switch.Memory.MapMemory(ImageBase + executable.Data.Offset, (ulong)executable.Data.Length, MemoryPermission.ReadAndWrite,MemoryType.CodeMutable);
 
             if (executable.Mod0Offset == 0)
-                Debug.ThrowNotImplementedException();
+            {
+                ulong BssOffset = executable.Data.Offset + executable.Data.Length;
+                ulong BssSize = executable.BssSize;
+
+                Switch.Memory.MapMemory(ImageBase + BssOffset,BssSize, MemoryPermission.ReadAndWrite, MemoryType.Normal);
+
+                ImageBase = ImageBase + BssOffset + BssSize;
+
+                return;
+            }
 
             //<-- https://switchbrew.org/wiki/NSO#MOD --> 860
             MemoryReader reader = GlobalMemory.GetReader();
@@ -132,7 +141,7 @@ namespace SkylerHLE.Horizon
 
         public void BeginProgram<T>() where T : CpuContext, new()
         {
-            KThread thread = MainOS.scheduler.CreateThread(new T(),this,ProgramStart,MemoryMetaData.StackTop,MemoryMetaData.TlsCollectionAddress);
+            KThread thread = MainOS.scheduler.CreateThread(new T(),this,ProgramStart,MemoryMetaData.StackTop,MemoryMetaData.TlsCollectionAddress,0,44);
 
             MainOS.scheduler.DetatchAndStartThread(thread.ID);
         }

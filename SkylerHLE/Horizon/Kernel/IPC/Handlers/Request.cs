@@ -21,6 +21,8 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
             ulong Magic = context.Reader.ReadStruct<ulong>();
             ulong CommandID = context.Reader.ReadStruct<ulong>();
 
+            context.CommandID = CommandID;
+
             if (context.session is KDomain)
             {
                 HandleIPCDomain(context,CommandID);
@@ -70,6 +72,10 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
             {
                 if (((ICommandObject)obj).Calls.ContainsKey(CommandID))
                     context.Call = ((ICommandObject)obj).Calls[CommandID];
+                else
+                {
+                    Debug.LogWarning($"{obj.GetType()}: Does not contain call {CommandID}");
+                }
             }
         }
 
@@ -87,9 +93,16 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
 
         public static void HandleIPCObject(CallContext context, ulong CommandID)
         {
-            object obj = ((KObject)context.session).Obj;
+            ICommandObject obj = (ICommandObject)((KObject)context.session).Obj;
 
-            context.Call = ((ICommandObject)obj).Calls[CommandID];
+            if (obj.Calls.ContainsKey(CommandID))
+            {
+                context.Call = obj.Calls[CommandID];
+            }
+            else
+            {
+                Debug.LogWarning($"{obj.GetType()}: Does not contain call {CommandID}");
+            }
         }
     }
 }

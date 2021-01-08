@@ -1,4 +1,5 @@
-﻿using SkylerCommon.Memory;
+﻿using SkylerCommon.Debugging;
+using SkylerCommon.Memory;
 using SkylerHLE.Horizon.IPC;
 using SkylerHLE.Horizon.Service.Sessions;
 using System;
@@ -19,5 +20,12 @@ namespace SkylerHLE.Horizon.Service
         public BinaryWriter Writer  { get; set; }
 
         public ServiceCall Call     { get; set; }
+
+        public ulong CommandID      { get; set; }
+
+        public void PrintStubbed()
+        {
+            Debug.Log($"Call Stubbed: {session.Name} {CommandID} {Call.Method.Name}");
+        }
     }
 }

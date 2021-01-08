@@ -11,6 +11,8 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace SkylerGraphics.Display
 {
+    public delegate void CloseFunction();
+
     public unsafe class TKWindow : GameWindow
     {
         string Vertex = @"
@@ -51,6 +53,8 @@ void main()
 
         int VAO;
 
+        public static ulong HidHandle { get; set; }
+
         public TKWindow() : base(
 
                 new GameWindowSettings()
@@ -64,6 +68,13 @@ void main()
                     Size = new Vector2i((int)GlobalsGraphics.ScreenWidth, (int)GlobalsGraphics.ScreenHeight)
                 }
             )
+        {
+
+        }
+
+        public CloseFunction End;
+
+        public void Start()
         {
             OnLoad();
 
@@ -117,6 +128,8 @@ void main()
                     break;
                 }
             }
+
+            End();
         }
 
         ShaderProgram shader;
@@ -224,7 +237,7 @@ void main()
 
             MemoryWriter writer = GlobalMemory.GetWriter();
 
-            writer.WriteStruct(3404668928 + 0xae38, State);
+            writer.WriteStruct(HidHandle + 0xae38, State);
         }
     }
 }
