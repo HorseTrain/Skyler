@@ -15,7 +15,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
         //<-- https://switchbrew.org/wiki/SVC#ConnectToNamedPort -->
         public static void ConnectToNamedPort(ObjectIndexer<ulong> X)
         {
-            string Name = GlobalMemory.RamReader.ReadStringAtAddress(X[1], 8);
+            string Name = GlobalMemory.GetReader().ReadStringAtAddress(X[1], 8);
 
             KSession session = new KSession(Name, true);
 
@@ -31,8 +31,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
 
             KSession session = (KSession)Switch.MainOS.Handles.GetObject(SessionHandle);
 
-            GlobalMemory.RamReader.Seek(Address);
-            IPCCommand command = new IPCCommand(GlobalMemory.RamReader,session is KDomain);
+            IPCCommand command = new IPCCommand(GlobalMemory.GetReader(Address),session is KDomain);
 
             IPCHandler.CallIPC(command, session);
 

@@ -40,7 +40,7 @@ namespace SkylerHLE.Horizon
         {
             InMemory = true;
 
-            MemoryWriter writer = GlobalMemory.RamWriter;
+            MemoryWriter writer = GlobalMemory.GetWriter();
 
             writer.WriteStruct(ImageBase + executable.Text.Offset, executable.Text.Data);
             writer.WriteStruct(ImageBase + executable.RoData.Offset, executable.RoData.Data);
@@ -54,7 +54,7 @@ namespace SkylerHLE.Horizon
                 Debug.ThrowNotImplementedException();
 
             //<-- https://switchbrew.org/wiki/NSO#MOD --> 860
-            MemoryReader reader = GlobalMemory.RamReader;
+            MemoryReader reader = GlobalMemory.GetReader();
 
             ulong Mod0Offset = ImageBase + executable.Mod0Offset;
 

@@ -1,5 +1,6 @@
 ﻿using SkylerCommon.Debugging;
 using SkylerCommon.Globals;
+using SkylerCommon.Memory;
 using SkylerGraphics.ContextHandler;
 using SkylerHLE.Horizon.Service.NV;
 using SkylerHLE.Horizon.Service.Sessions;
@@ -45,15 +46,15 @@ namespace SkylerHLE.Horizon.Service.VI
             ulong DataPosition = context.request.SendDescriptors[0].Address;
             ulong DataSize = context.request.SendDescriptors[0].Size;
 
-            GlobalMemory.RamReader.Seek(DataPosition);
+            MemoryReader reader = GlobalMemory.GetReader(DataPosition);
 
-            byte[] Data = GlobalMemory.RamReader.ReadStruct<byte>(DataSize);
+            byte[] Data = reader.ReadStruct<byte>(DataSize);
 
             Data = Parcel.GetParcelData(Data);
 
             using (MemoryStream MS = new MemoryStream(Data))
             {
-                BinaryReader Reader = new BinaryReader(MS);
+                System.IO.BinaryReader Reader = new System.IO.BinaryReader(MS);
 
                 MS.Seek(4, SeekOrigin.Current);
 
@@ -134,7 +135,7 @@ namespace SkylerHLE.Horizon.Service.VI
 
             using (MemoryStream MS = new MemoryStream(ParcelData))
             {
-                BinaryReader Reader = new BinaryReader(MS);
+                System.IO. BinaryReader Reader = new System.IO.BinaryReader(MS);
 
                 MS.Seek(0xd4, SeekOrigin.Begin);
 
@@ -155,7 +156,7 @@ namespace SkylerHLE.Horizon.Service.VI
 
             byte[] Reply = Parcel.MakeParcel(Data, new byte[0]);
 
-            GlobalMemory.RamWriter.WriteStruct(ReplyPos,Reply);
+            GlobalMemory.GetWriter().WriteStruct(ReplyPos,Reply);
 
             return 0;
         }

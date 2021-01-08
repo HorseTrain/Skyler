@@ -28,15 +28,14 @@ namespace SkylerHLE.Horizon.Kernel.SVC
 
             Debug.Log($"Queried Memory With: {Map}");
 
-            GlobalMemory.RamWriter.WriteStruct<ulong>(Destination, Map.Address); 
-            GlobalMemory.RamWriter.WriteStruct<ulong>(Destination + 0x08, Map.Size);
-
-            GlobalMemory.RamWriter.WriteStruct<uint>(Destination + 0x10, (uint)Map.Type);
-            GlobalMemory.RamWriter.WriteStruct<uint>(Destination + 0x14, Map.Attr); //Almost Always 0
-            GlobalMemory.RamWriter.WriteStruct<uint>(Destination + 0x18, (uint)Map.Permission);
-            GlobalMemory.RamWriter.WriteStruct<uint>(Destination + 0x1c, 0);
-            GlobalMemory.RamWriter.WriteStruct<uint>(Destination + 0x20, 0);
-            GlobalMemory.RamWriter.WriteStruct<uint>(Destination + 0x24, 0);
+            GlobalMemory.GetWriter().WriteStruct<ulong>(Destination, Map.Address); 
+            GlobalMemory.GetWriter().WriteStruct<ulong>(Destination + 0x08, Map.Size);
+            GlobalMemory.GetWriter().WriteStruct<uint>(Destination + 0x10, (uint)Map.Type);
+            GlobalMemory.GetWriter().WriteStruct<uint>(Destination + 0x14, Map.Attr); //Almost Always 0
+            GlobalMemory.GetWriter().WriteStruct<uint>(Destination + 0x18, (uint)Map.Permission);
+            GlobalMemory.GetWriter().WriteStruct<uint>(Destination + 0x1c, 0);
+            GlobalMemory.GetWriter().WriteStruct<uint>(Destination + 0x20, 0);
+            GlobalMemory.GetWriter().WriteStruct<uint>(Destination + 0x24, 0);
 
             X[0] = 0;
             X[1] = 0;

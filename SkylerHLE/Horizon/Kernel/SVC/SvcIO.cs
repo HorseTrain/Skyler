@@ -23,9 +23,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             ulong Address = X[0];
             ulong Size = X[1];
 
-            MemoryReader reader = GlobalMemory.RamReader;
-
-            reader.Seek(Address);
+            MemoryReader reader = GlobalMemory.GetReader(Address);
 
             SupervisorCallCollection.SvcLog(reader.ReadString(Size));
 

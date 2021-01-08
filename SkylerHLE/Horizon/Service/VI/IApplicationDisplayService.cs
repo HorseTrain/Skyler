@@ -1,4 +1,5 @@
 ﻿using SkylerCommon.Globals;
+using SkylerCommon.Memory;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -68,8 +69,8 @@ namespace SkylerHLE.Horizon.Service.VI
 
             byte[] Parcel = MakeGraphicsBufferProcedure(ParcelPtr);
 
-            GlobalMemory.RamWriter.Seek(ParcelPtr);
-            GlobalMemory.RamWriter.WriteStruct(Parcel);
+            MemoryWriter writer = GlobalMemory.GetWriter(ParcelPtr);
+            writer.WriteStruct(Parcel);
 
             context.Writer.Write((ulong)Parcel.Length);
 

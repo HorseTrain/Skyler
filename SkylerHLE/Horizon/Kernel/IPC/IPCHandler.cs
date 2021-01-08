@@ -22,7 +22,7 @@ namespace SkylerHLE.Horizon.Kernel.IPC
                 session = session,
                 request = command,
                 response = new IPCCommand(command.IsDomain),
-                Reader = GlobalMemory.RamReader
+                Reader = GlobalMemory.GetReader()
             };
 
             context.Reader.Seek(command.RawDataPointer);
@@ -34,9 +34,7 @@ namespace SkylerHLE.Horizon.Kernel.IPC
                 default: throw new NotImplementedException();
             }
 
-            GlobalMemory.RamWriter.Seek(command.Address);
-
-            GlobalMemory.RamWriter.WriteStruct(context.response.BuildResponse(command.Address));
+            GlobalMemory.GetWriter(command.Address).WriteStruct(context.response.BuildResponse(command.Address));
         }
     }
 }

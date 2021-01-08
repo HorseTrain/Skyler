@@ -222,7 +222,7 @@ void main()
                 State |= 0x800;
             }
 
-            MemoryWriter writer = GlobalMemory.RamWriter;
+            MemoryWriter writer = GlobalMemory.GetWriter();
 
             writer.WriteStruct(3404668928 + 0xae38, State);
         }

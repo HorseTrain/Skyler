@@ -12,16 +12,27 @@ namespace SkylerCommon.Globals
         public static IntPtr BaseMemory { get; set; }
         public static unsafe void* BaseMemoryPointer => BaseMemory.ToPointer();
 
-        //TODO: Make these thread safe;
-        public static MemoryReader RamReader { get; private set; } 
-        public static MemoryWriter RamWriter { get; private set; } 
+        public static MemoryReader GetReader(ulong Address = 0)
+        {
+            MemoryReader Out = new MemoryReader(BaseMemoryPointer);
+
+            Out.Seek(Address);
+
+            return Out;
+        }
+
+        public static MemoryWriter GetWriter(ulong Address = 0)
+        {
+            MemoryWriter Out = new MemoryWriter(BaseMemoryPointer);
+
+            Out.Seek(Address);
+
+            return Out;
+        }
 
         public static void SetBaseAddress(void* Address)
         {
             BaseMemory = (IntPtr)Address;
-
-            RamReader = new MemoryReader(Address);
-            RamWriter = new MemoryWriter(Address);
         }
     }
 }

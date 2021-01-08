@@ -42,8 +42,7 @@ namespace SkylerHLE.Horizon.Service.NV
             context.Reader.Seek(Position);
             uint Size = context.Reader.ReadStruct<uint>();
 
-            GlobalMemory.RamWriter.Seek(Position + 4);
-            GlobalMemory.RamWriter.WriteStruct(new NvMap(Size).ID);
+            GlobalMemory.GetWriter(Position + 4).WriteStruct(new NvMap(Size).ID);
 
             return 0;
         }
@@ -52,9 +51,9 @@ namespace SkylerHLE.Horizon.Service.NV
         {
             ulong Position = context.request.GetSendBuffPtr();
 
-            uint ID = GlobalMemory.RamReader.ReadStructAtOffset<uint>(Position);
+            uint ID = GlobalMemory.GetReader().ReadStructAtOffset<uint>(Position);
 
-            GlobalMemory.RamWriter.WriteStruct<uint>(Position + 4, ((NvMap)Switch.MainOS.Handles[ID]).ID); //Might be redudant?
+            GlobalMemory.GetWriter().WriteStruct<uint>(Position + 4, ((NvMap)Switch.MainOS.Handles[ID]).ID); //Might be redudant?
 
 
 
@@ -65,9 +64,7 @@ namespace SkylerHLE.Horizon.Service.NV
         {
             ulong Position = context.request.GetSendBuffPtr();
 
-            GlobalMemory.RamReader.Seek(Position);
-
-            MemoryReader Reader = GlobalMemory.RamReader;
+            MemoryReader Reader = GlobalMemory.GetReader(Position);
 
             uint Handle = Reader.ReadStruct<uint>();
             uint HeapMask = Reader.ReadStruct<uint>();
@@ -89,9 +86,7 @@ namespace SkylerHLE.Horizon.Service.NV
         {
             ulong Position = context.request.GetSendBuffPtr();
 
-            GlobalMemory.RamReader.Seek(Position);
-
-            MemoryReader Reader = GlobalMemory.RamReader;
+            MemoryReader Reader = GlobalMemory.GetReader(Position);
 
             uint Handle = Reader.ReadStruct<uint>();
             uint Peram = Reader.ReadStruct<uint>();
@@ -108,7 +103,7 @@ namespace SkylerHLE.Horizon.Service.NV
                 case 5: Response = map.Kind; break;
             }
 
-            GlobalMemory.RamWriter.WriteStruct(Position + 8, Response);
+            GlobalMemory.GetWriter().WriteStruct(Position + 8, Response);
 
             return 0;
         }
@@ -117,7 +112,7 @@ namespace SkylerHLE.Horizon.Service.NV
         {
             ulong Position = context.request.GetSendBuffPtr();
 
-            MemoryReader Reader = GlobalMemory.RamReader;
+            MemoryReader Reader = GlobalMemory.GetReader();
 
             Reader.Seek(Position + 4);
 
@@ -125,7 +120,7 @@ namespace SkylerHLE.Horizon.Service.NV
 
             NvMap map = (NvMap)Switch.MainOS.Handles[Handle];
 
-            GlobalMemory.RamWriter.WriteStruct(Position,Handle);
+            GlobalMemory.GetWriter().WriteStruct(Position,Handle);
 
             return 0;
         }
