@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SkylerCommon\SkylerCommon.csproj" />
+    <ProjectReference Include="..\SkylerCPU\SkylerCPU.csproj" />
+    <ProjectReference Include="..\SkylerGraphics\SkylerGraphics.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Horizon\Service\ServiceObjects\NewFolder\" />
+    <Folder Include="RomFS\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LibHac" Version="0.12.0" />
+  </ItemGroup>
+
+</Project>

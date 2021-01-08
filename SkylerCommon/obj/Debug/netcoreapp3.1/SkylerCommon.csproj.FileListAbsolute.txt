@@ -1,0 +1,8 @@
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\bin\Debug\netcoreapp3.1\SkylerCommon.deps.json
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\bin\Debug\netcoreapp3.1\SkylerCommon.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\bin\Debug\netcoreapp3.1\SkylerCommon.pdb
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\Debug\netcoreapp3.1\SkylerCommon.AssemblyInfoInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\Debug\netcoreapp3.1\SkylerCommon.AssemblyInfo.cs
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\Debug\netcoreapp3.1\SkylerCommon.csproj.CoreCompileInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\Debug\netcoreapp3.1\SkylerCommon.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\Debug\netcoreapp3.1\SkylerCommon.pdb

@@ -1,0 +1,9 @@
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Debug\netcoreapp3.1\SkylerUnicorn.csprojAssemblyReference.cache
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Debug\netcoreapp3.1\SkylerUnicorn.AssemblyInfoInputs.cache
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Debug\netcoreapp3.1\SkylerUnicorn.AssemblyInfo.cs
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Debug\netcoreapp3.1\SkylerUnicorn.csproj.CoreCompileInputs.cache
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\bin\Debug\netcoreapp3.1\SkylerUnicorn.deps.json
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\bin\Debug\netcoreapp3.1\SkylerUnicorn.dll
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\bin\Debug\netcoreapp3.1\SkylerUnicorn.pdb
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Debug\netcoreapp3.1\SkylerUnicorn.dll
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Debug\netcoreapp3.1\SkylerUnicorn.pdb

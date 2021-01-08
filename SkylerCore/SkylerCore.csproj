@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SkylerCommon\SkylerCommon.csproj" />
+    <ProjectReference Include="..\SkylerCPU\SkylerCPU.csproj" />
+    <ProjectReference Include="..\SkylerHLE\SkylerHLE.csproj" />
+    <ProjectReference Include="..\SkylerShader\SkylerShader.csproj" />
+    <ProjectReference Include="..\SkylerUnicorn\SkylerUnicorn.csproj" />
+  </ItemGroup>
+
+</Project>

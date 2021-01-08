@@ -1,0 +1,61 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "SkylerCore/1.0.0": {
+        "dependencies": {
+          "SkylerCPU": "1.0.0",
+          "SkylerCommon": "1.0.0",
+          "SkylerUnicorn": "1.0.0"
+        },
+        "runtime": {
+          "SkylerCore.dll": {}
+        }
+      },
+      "SkylerCommon/1.0.0": {
+        "runtime": {
+          "SkylerCommon.dll": {}
+        }
+      },
+      "SkylerCPU/1.0.0": {
+        "dependencies": {
+          "SkylerCommon": "1.0.0"
+        },
+        "runtime": {
+          "SkylerCPU.dll": {}
+        }
+      },
+      "SkylerUnicorn/1.0.0": {
+        "runtime": {
+          "SkylerUnicorn.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "SkylerCore/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SkylerCommon/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SkylerCPU/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "SkylerUnicorn/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,9 @@
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\bin\x64\Debug\netcoreapp2.2\SkylerCommon.deps.json
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\bin\x64\Debug\netcoreapp2.2\SkylerCommon.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\bin\x64\Debug\netcoreapp2.2\SkylerCommon.pdb
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\x64\Debug\netcoreapp2.2\SkylerCommon.csprojAssemblyReference.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\x64\Debug\netcoreapp2.2\SkylerCommon.AssemblyInfoInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\x64\Debug\netcoreapp2.2\SkylerCommon.AssemblyInfo.cs
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\x64\Debug\netcoreapp2.2\SkylerCommon.csproj.CoreCompileInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\x64\Debug\netcoreapp2.2\SkylerCommon.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\x64\Debug\netcoreapp2.2\SkylerCommon.pdb

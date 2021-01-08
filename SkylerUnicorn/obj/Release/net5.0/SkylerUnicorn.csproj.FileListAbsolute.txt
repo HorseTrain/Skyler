@@ -1,0 +1,11 @@
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\bin\Release\net5.0\SkylerUnicorn.deps.json
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\bin\Release\net5.0\SkylerUnicorn.dll
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\bin\Release\net5.0\ref\SkylerUnicorn.dll
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\bin\Release\net5.0\SkylerUnicorn.pdb
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Release\net5.0\SkylerUnicorn.GeneratedMSBuildEditorConfig.editorconfig
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Release\net5.0\SkylerUnicorn.AssemblyInfoInputs.cache
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Release\net5.0\SkylerUnicorn.AssemblyInfo.cs
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Release\net5.0\SkylerUnicorn.csproj.CoreCompileInputs.cache
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Release\net5.0\SkylerUnicorn.dll
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Release\net5.0\ref\SkylerUnicorn.dll
+D:\Emulator Dev\Project-Skyler\Skyler\SkylerUnicorn\obj\Release\net5.0\SkylerUnicorn.pdb
