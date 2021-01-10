@@ -1,11 +1,8 @@
-﻿using LibHac;
-using SkylerCommon.Debugging;
+﻿using SkylerCommon.Debugging;
 using SkylerCommon.Globals;
 using SkylerCommon.Memory;
 using SkylerCommon.Utilities.Tools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SkylerHLE.Memory
 {

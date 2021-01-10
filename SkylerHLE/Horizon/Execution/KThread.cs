@@ -1,4 +1,5 @@
 ﻿using SkylerCPU;
+using System.Threading;
 using static SkylerHLE.Switch;
 
 namespace SkylerHLE.Horizon.Execution
@@ -10,6 +11,7 @@ namespace SkylerHLE.Horizon.Execution
         public Process HostProcess  { get; set; }
         public bool Running         { get; set; }
         public ulong ThreadPriority { get; set; }
+        public Thread HostThread    { get; set; }
 
         public KThread(CpuContext context,Process process,ulong Priority)
         {
@@ -20,6 +22,13 @@ namespace SkylerHLE.Horizon.Execution
             ThreadPriority = Priority;
         }
 
-        public void Execute() => Cpu.Execute();
+        void Execute() => Cpu.Execute();
+
+        public void StartThread()
+        {
+            HostThread = new Thread(Execute);
+
+            HostThread.Start();
+        }
     }
 }

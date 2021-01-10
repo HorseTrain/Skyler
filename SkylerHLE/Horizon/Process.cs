@@ -46,9 +46,9 @@ namespace SkylerHLE.Horizon
             writer.WriteStruct(ImageBase + executable.RoData.Offset, executable.RoData.Data);
             writer.WriteStruct(ImageBase + executable.Data.Offset, executable.Data.Data);
 
-            Switch.Memory.MapMemory(ImageBase + executable.Text.Offset, (ulong)executable.Text.Length, MemoryPermission.ReadAndExecute,MemoryType.CodeStatic);
-            Switch.Memory.MapMemory(ImageBase + executable.RoData.Offset, (ulong)executable.RoData.Length, MemoryPermission.Read,MemoryType.CodeMutable);
-            Switch.Memory.MapMemory(ImageBase + executable.Data.Offset, (ulong)executable.Data.Length, MemoryPermission.ReadAndWrite,MemoryType.CodeMutable);
+            Switch.Memory.MapMemory(ImageBase + executable.Text.Offset, executable.Text.Length, MemoryPermission.ReadAndExecute,MemoryType.CodeStatic);
+            Switch.Memory.MapMemory(ImageBase + executable.RoData.Offset, executable.RoData.Length, MemoryPermission.Read,MemoryType.CodeMutable);
+            Switch.Memory.MapMemory(ImageBase + executable.Data.Offset, executable.Data.Length, MemoryPermission.ReadAndWrite,MemoryType.CodeMutable);
 
             if (executable.Mod0Offset == 0)
             {

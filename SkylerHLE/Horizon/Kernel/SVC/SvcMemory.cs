@@ -1,6 +1,7 @@
 ﻿using SkylerCommon.Debugging;
 using SkylerCommon.Globals;
 using SkylerCommon.Utilities.Tools;
+using SkylerCPU;
 using SkylerHLE.Horizon.Execution;
 using SkylerHLE.Horizon.Handles;
 using SkylerHLE.Memory;
@@ -115,11 +116,45 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[0] = 0;
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#WaitProcessWideKeyAtomic -->
+        public static void WaitProcessWideKeyAtomic(ObjectIndexer<ulong> X)
+        {
+            ulong KeyAddress = X[0];
+            ulong TagAddress = X[1];
+            int Tag = (int)X[2];
+            ulong TimeOut = X[3];
+
+            KThread thread = (KThread)((CpuContext)X.parent).ThreadInformation;
+
+            Scheduler scheduler = MainOS.scheduler;
+
+            scheduler.MutexLockAddress(KeyAddress,TagAddress,Tag,TimeOut,thread);
+
+            X[0] = 0;
+        }
+
         //<-- https://switchbrew.org/wiki/SVC#SignalProcessWideKey -->
         public static void SignalProcessWideKey(ObjectIndexer<ulong> X)
         {
             ulong Address = X[0];
-            ulong Value = X[1];
+            int Tag = (int)X[1];
+
+            KThread thread = (KThread)((CpuContext)X.parent).ThreadInformation;
+
+            Scheduler scheduler = MainOS.scheduler;
+
+            scheduler.MutexUnlockAddress(Address,Tag);
+
+            X[0] = 0;
+        }
+
+        //<-- https://switchbrew.org/wiki/SVC#MapPhysicalMemory -->
+        public static void MapPhysicalMemory(ObjectIndexer<ulong> X)
+        {
+            ulong Address = X[0];
+            ulong Size = X[1];
+
+            Switch.Memory.MapMemory(Address,Size,MemoryPermission.ReadAndWrite,MemoryType.Heap);
 
             X[0] = 0;
         }

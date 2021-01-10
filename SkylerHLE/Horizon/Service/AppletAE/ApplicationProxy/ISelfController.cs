@@ -14,7 +14,15 @@ namespace SkylerHLE.Horizon.Service.AppletAE.ApplicationProxy
         {
             Calls = new Dictionary<ulong, ServiceCall>()
             {
-
+                { 1,  Helper.Stubbed },
+                { 9,  Helper.Stubbed },
+                { 10, Helper.Stubbed },
+                { 11, Helper.Stubbed },
+                { 12, Helper.Stubbed },
+                { 13, Helper.Stubbed },
+                { 14, Helper.Stubbed },
+                { 16, Helper.Stubbed },
+                { 50, Helper.Stubbed }
             };
         }
     }

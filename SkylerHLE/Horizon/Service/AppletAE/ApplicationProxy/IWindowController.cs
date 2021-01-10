@@ -15,13 +15,15 @@ namespace SkylerHLE.Horizon.Service.AppletAE.ApplicationProxy
             Calls = new Dictionary<ulong, ServiceCall>()
             {
                 {1,     GetAppletResourceUserId },
-                {10,    GetAppletResourceUserId },
+                {10,    AcquireForegroundRights },
             };
         }
 
         public ulong GetAppletResourceUserId(CallContext context)
         {
             context.PrintStubbed();
+
+            context.Writer.Write(0L);
 
             return 0;
         }

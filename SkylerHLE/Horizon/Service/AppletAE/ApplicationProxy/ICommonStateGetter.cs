@@ -18,24 +18,57 @@ namespace SkylerHLE.Horizon.Service.AppletAE.ApplicationProxy
             Calls = new Dictionary<ulong, ServiceCall>()
             {
                 {0, GetEventHandle },
-                {1, ReceiveMessage }
+                {1, ReceiveMessage },
+                {5, GetOperationMode},
+                {6, GetPerformanceMode },
+                {9, GetCurrentFocusState}
             };
         }
 
         public ulong GetEventHandle(CallContext context)
         {
-            //TODO:
+            KEvent Event = Switch.MainOS.AppletManager.MessegeSendEvent;
 
-            Debug.LogError("",true);
+            context.response.HandleDescriptor = HandleDescriptor.MakeCopy((uint)Event.ID);
 
             return 0;
         }
 
         public static ulong ReceiveMessage(CallContext context)
         {
-            //TODO:
+            context.Writer.Write((int)Switch.MainOS.AppletManager.PopMessage());
 
-            Debug.LogError("", true);
+            return 0;
+        }
+
+        public ulong GetOperationMode(CallContext context)
+        {
+            if (Switch.MainSwitch.InDock)
+            {
+                context.Writer.Write((byte)1);
+            }
+            else
+            {
+                context.Writer.Write((byte)0);
+            }
+
+            return 0;
+        }
+
+        public ulong GetPerformanceMode(CallContext context) => GetOperationMode(context);
+
+        public static ulong GetCurrentFocusState(CallContext context)
+        {
+            AppletManager manager = Switch.MainOS.AppletManager;
+
+            if (manager.InFocus)
+            {
+                context.Writer.Write((byte)1);
+            }
+            else
+            {
+                context.Writer.Write((byte)0);
+            }
 
             return 0;
         }

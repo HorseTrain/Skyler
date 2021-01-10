@@ -28,5 +28,12 @@ namespace SkylerHLE.Horizon.Service
                 Debug.LogError("Invalid Object!!");
             }
         }
+
+        public static ulong Stubbed(CallContext context)
+        {
+            context.PrintStubbed();
+
+            return 0;
+        }
     }
 }

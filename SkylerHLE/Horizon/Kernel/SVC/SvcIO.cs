@@ -19,7 +19,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
 {
     static class SvcIO
     {
-        //<-- https://switchbrew.org/wiki/SVC#OutputDebugString -->
+        //<-- https://switchbrew.org/wiki/SVC#OutputDebugString --> //Self explanatory
         public static void OutputDebugString(ObjectIndexer<ulong> X)
         {
             ulong Address = X[0];
@@ -32,10 +32,10 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[0] = 0;
         }
 
-        //<-- https://switchbrew.org/wiki/SVC#GetSystemTick -->
+        //<-- https://switchbrew.org/wiki/SVC#GetSystemTick --> //Self explanatory
         public static void GetSystemTick(ObjectIndexer<ulong> X) => X[0] = GlobalCounter.cntpct_el0;
 
-        //<-- https://switchbrew.org/wiki/SVC#GetInfo -->
+        //<-- https://switchbrew.org/wiki/SVC#GetInfo --> //Self explanatory
         public static void GetInfo(ObjectIndexer<ulong> X)
         {
             ulong InfoType = X[1];
@@ -43,7 +43,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             ulong InfoSubType = X[3];
 
             //Kernel too new (for now)
-            if (InfoType >= 19)
+            if (InfoType >= 18)
             {
                 X[0] = 61441;
 
@@ -54,6 +54,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
 
             switch (InfoType)
             {
+                case 0: X[1] = 0b1111; break;
                 case 2: X[1] = 0x10000000; break;   //TODO: Put this in a constant.
                 case 3: X[1] = 0x20000000; break;   //TODO: Put this in a constant.
                 case 4: X[1] = 0x10000000 + 0x20000000; break;  //TODO: Put this in a constant.
@@ -72,7 +73,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             }
         }
 
-        //<-- https://switchbrew.org/wiki/SVC#CloseHandle -->
+        //<-- https://switchbrew.org/wiki/SVC#CloseHandle -->// Self explanatory
         public static void CloseHandle(ObjectIndexer<ulong> X)
         {
             Switch.MainOS.Handles.RemoveObject(X[0]);
@@ -92,7 +93,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[0] = 0;
         }
 
-        //<-- https://switchbrew.org/wiki/SVC#WaitSynchronization -->
+        //<-- https://switchbrew.org/wiki/SVC#WaitSynchronization --> //This emulates events.
         public static void WaitSynchronization(ObjectIndexer<ulong> X)
         {
             //TODO:
@@ -106,14 +107,46 @@ namespace SkylerHLE.Horizon.Kernel.SVC
                 X[0] = 0xEE01;
             }
 
-            KThread thread = (KThread)((CpuContext)(X.parent)).ThreadInformation;
+            //KThread thread = (KThread)((CpuContext)X.parent).ThreadInformation;
 
-            MemoryReader reader = GlobalMemory.GetReader(HandlePointer);
+            Scheduler scheduler = Switch.MainOS.scheduler;
 
-            X[0] = 0;
+            WaitHandle[] WaitHandles = scheduler.GetEventHandles(GlobalMemory.GetReader(HandlePointer), HandleCount);
+
+            scheduler.AddSuspendedThread(WaitHandles[HandleCount]);
+
+            int HandleResult = 0;
+            ulong Result = 0;
+
+            if (TimeOut == ulong.MaxValue)
+            {
+                HandleResult = WaitHandle.WaitAny(WaitHandles);
+            }
+            else
+            {
+                HandleResult = WaitHandle.WaitAny(WaitHandles, Scheduler.GetTimeMS(TimeOut));
+            }
+
+            if (HandleResult == WaitHandle.WaitTimeout)
+            {
+                Result = 59905;
+            }
+            else if (HandleResult == WaitHandles.Length + 1)
+            {
+                //TODO:
+            }
+
+            scheduler.UnSuspendThread(WaitHandles[HandleCount]);
+
+            X[0] = Result;
+
+            if (Result == 0)
+            {
+                X[1] = (ulong)HandleResult;
+            }
         }
 
-        //<-- https://switchbrew.org/wiki/SVC#SleepThread -->
+        //<-- https://switchbrew.org/wiki/SVC#SleepThread --> //Self explanatory
         public static void SleepThread(ObjectIndexer<ulong> X)
         {
             ulong Nanoseconds = X[0];
@@ -123,7 +156,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             Thread.Sleep((int)(Nanoseconds / 1000000));
         }
 
-        //<-- https://switchbrew.org/wiki/SVC#GetThreadPriority -->
+        //<-- https://switchbrew.org/wiki/SVC#GetThreadPriority --> //Self explanatory
         public static void GetThreadPriority(ObjectIndexer<ulong> X)
         {
             ulong Handle = X[1];
@@ -134,7 +167,20 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[1] = thread.ThreadPriority;
         }
 
-        //<-- https://switchbrew.org/wiki/SVC#GetThreadId -->
+        //<-- https://switchbrew.org/wiki/SVC#SetThreadPriority -->
+        public static void SetThreadPriority(ObjectIndexer<ulong> X)
+        {
+            ulong Handle = X[0];
+            ulong Priority = X[1];
+
+            KThread thread = (KThread)Switch.MainOS.Handles[Handle];
+
+            thread.ThreadPriority = Priority;
+
+            X[0] = 0;
+        }
+
+        //<-- https://switchbrew.org/wiki/SVC#GetThreadId --> //Self explanatory
         public static void GetThreadId(ObjectIndexer<ulong> X)
         {
             ulong Handle = X[1];

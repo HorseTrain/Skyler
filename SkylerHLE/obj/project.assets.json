@@ -2,18 +2,6 @@
   "version": 3,
   "targets": {
     "net5.0": {
-      "LibHac/0.12.0": {
-        "type": "package",
-        "dependencies": {
-          "System.Runtime.CompilerServices.Unsafe": "5.0.0-preview.7.20364.11"
-        },
-        "compile": {
-          "lib/netcoreapp3.0/LibHac.dll": {}
-        },
-        "runtime": {
-          "lib/netcoreapp3.0/LibHac.dll": {}
-        }
-      },
       "OpenTK/4.4.0": {
         "type": "package",
         "dependencies": {
@@ -152,15 +140,6 @@
           "lib/netcoreapp3.1/OpenTK.Windowing.GraphicsLibraryFramework.dll": {}
         }
       },
-      "System.Runtime.CompilerServices.Unsafe/5.0.0-preview.7.20364.11": {
-        "type": "package",
-        "compile": {
-          "ref/netstandard2.1/System.Runtime.CompilerServices.Unsafe.dll": {}
-        },
-        "runtime": {
-          "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {}
-        }
-      },
       "SkylerCommon/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -216,21 +195,6 @@
     }
   },
   "libraries": {
-    "LibHac/0.12.0": {
-      "sha512": "pZgDiOYI7EdUIXu7S3OwL/+aT6W5luGqJRXBSErdLVJwOEQTISeiMyQZzd2bnxfqLiSyTGp3By8mftC5R8cKUw==",
-      "type": "package",
-      "path": "libhac/0.12.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/netcoreapp3.0/LibHac.dll",
-        "lib/netcoreapp3.0/LibHac.xml",
-        "lib/netstandard2.1/LibHac.dll",
-        "lib/netstandard2.1/LibHac.xml",
-        "libhac.0.12.0.nupkg.sha512",
-        "libhac.nuspec"
-      ]
-    },
     "OpenTK/4.4.0": {
       "sha512": "Aryw2QNeApYtbv9fGc1QbPjNvVrkyUsMHNjnQzW3MSUPudttpOLNVgRiF414IlmgvmMOAv4qPLCZfBD/+dGp+w==",
       "type": "package",
@@ -385,36 +349,6 @@
         "opentk.windowing.graphicslibraryframework.nuspec"
       ]
     },
-    "System.Runtime.CompilerServices.Unsafe/5.0.0-preview.7.20364.11": {
-      "sha512": "6oEx3elihyJmDIcofF5g5AB2hSk0P+lc9WIyDEEVxi6BlBk1xkoOik/r16YlLT/rq/a7rUdyXzbRtabH9N+Dxg==",
-      "type": "package",
-      "path": "system.runtime.compilerservices.unsafe/5.0.0-preview.7.20364.11",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Icon.png",
-        "LICENSE.TXT",
-        "THIRD-PARTY-NOTICES.TXT",
-        "lib/net45/System.Runtime.CompilerServices.Unsafe.dll",
-        "lib/net45/System.Runtime.CompilerServices.Unsafe.xml",
-        "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll",
-        "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.xml",
-        "lib/netstandard1.0/System.Runtime.CompilerServices.Unsafe.dll",
-        "lib/netstandard1.0/System.Runtime.CompilerServices.Unsafe.xml",
-        "lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll",
-        "lib/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml",
-        "ref/netstandard1.0/System.Runtime.CompilerServices.Unsafe.dll",
-        "ref/netstandard1.0/System.Runtime.CompilerServices.Unsafe.xml",
-        "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll",
-        "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml",
-        "ref/netstandard2.1/System.Runtime.CompilerServices.Unsafe.dll",
-        "ref/netstandard2.1/System.Runtime.CompilerServices.Unsafe.xml",
-        "system.runtime.compilerservices.unsafe.5.0.0-preview.7.20364.11.nupkg.sha512",
-        "system.runtime.compilerservices.unsafe.nuspec",
-        "useSharedDesignerContext.txt",
-        "version.txt"
-      ]
-    },
     "SkylerCommon/1.0.0": {
       "type": "project",
       "path": "../SkylerCommon/SkylerCommon.csproj",
@@ -438,7 +372,6 @@
   },
   "projectFileDependencyGroups": {
     "net5.0": [
-      "LibHac >= 0.12.0",
       "SkylerCPU >= 1.0.0",
       "SkylerCommon >= 1.0.0",
       "SkylerGraphics >= 1.0.0"
@@ -497,12 +430,6 @@
     "frameworks": {
       "net5.0": {
         "targetAlias": "net5.0",
-        "dependencies": {
-          "LibHac": {
-            "target": "Package",
-            "version": "[0.12.0, )"
-          }
-        },
         "imports": [
           "net461",
           "net462",

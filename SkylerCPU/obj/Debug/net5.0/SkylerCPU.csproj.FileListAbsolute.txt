@@ -1,0 +1,15 @@
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\bin\Debug\net5.0\SkylerCPU.deps.json
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\bin\Debug\net5.0\SkylerCPU.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\bin\Debug\net5.0\ref\SkylerCPU.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\bin\Debug\net5.0\SkylerCPU.pdb
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\bin\Debug\net5.0\SkylerCommon.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\bin\Debug\net5.0\SkylerCommon.pdb
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\obj\Debug\net5.0\SkylerCPU.csprojAssemblyReference.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\obj\Debug\net5.0\SkylerCPU.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\obj\Debug\net5.0\SkylerCPU.AssemblyInfoInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\obj\Debug\net5.0\SkylerCPU.AssemblyInfo.cs
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\obj\Debug\net5.0\SkylerCPU.csproj.CoreCompileInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\obj\Debug\net5.0\SkylerCPU.csproj.CopyComplete
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\obj\Debug\net5.0\SkylerCPU.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\obj\Debug\net5.0\ref\SkylerCPU.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerCPU\obj\Debug\net5.0\SkylerCPU.pdb

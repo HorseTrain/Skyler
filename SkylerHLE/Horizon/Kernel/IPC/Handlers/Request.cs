@@ -1,16 +1,11 @@
-﻿using LibHac.Fs;
-using SkylerCommon.Debugging;
+﻿using SkylerCommon.Debugging;
 using SkylerCommon.Utilities.Tools;
 using SkylerHLE.Horizon.IPC;
 using SkylerHLE.Horizon.Kernel.SVC;
 using SkylerHLE.Horizon.Service;
 using SkylerHLE.Horizon.Service.Sessions;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
 {
@@ -32,20 +27,23 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
                 HandleIPCSession(context,CommandID);
             }
 
-            if (context.Call == null)
+            if (!context.Ignore)
             {
-                Debug.LogError($"Unknown Service: {context.session.Name}, {CommandID}",true);
-            }
+                if (context.Call == null)
+                {
+                    Debug.LogError($"Unknown Service: {context.session.Name}, {CommandID}", true);
+                }
 
-            using (MemoryStream stream = new MemoryStream()) //TODO: Use ram writer instead.
-            {
-                context.Writer = new BinaryWriter(stream);
+                using (MemoryStream stream = new MemoryStream()) //TODO: Use ram writer instead.
+                {
+                    context.Writer = new BinaryWriter(stream);
 
-                ulong result = context.Call(context);
+                    ulong result = context.Call(context);
 
-                context.response = ResponseHandler.FillResponse(context.response,result,stream.ToArray());
+                    context.response = ResponseHandler.FillResponse(context.response, result, stream.ToArray());
 
-                SupervisorCallCollection.SvcLog($"Called Service: {StringTools.FillStringBack(context.session.Name,' ',20)} {StringTools.FillStringBack(CommandID,' ',5)}");
+                    SupervisorCallCollection.SvcLog($"Called Service: {StringTools.FillStringBack(context.session.Name, ' ', 20)} {StringTools.FillStringBack(CommandID, ' ', 5)}");
+                }
             }
         }
 
@@ -54,6 +52,7 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
             switch (context.request.DCommand)
             {
                 case DomainCommand.SendMsg: HandleIPCDomainSendMessage(context, CommandID); break;
+                case DomainCommand.DeleteObj: HandleIPCDomainDeleteObject(context,CommandID); break;
                 default: Debug.ThrowNotImplementedException(); break;
             }
         }
@@ -67,6 +66,9 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
             if (obj is KDomain)
             {
                 context.Call = ServiceCollection.GetService(domain.Name,CommandID);
+
+                context.Data = domain.Name;
+                context.CommandID = CommandID;
             }
             else
             {
@@ -79,6 +81,13 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
             }
         }
 
+        public static void HandleIPCDomainDeleteObject(CallContext context, ulong CommandID)
+        {
+            //TODO:
+
+            context.Ignore = true;
+        }
+
         public static void HandleIPCSession(CallContext context,ulong CommandID)
         {
             if (context.session is KObject)
@@ -88,6 +97,9 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
             else
             {
                 context.Call = ServiceCollection.GetService(context.session.Name,CommandID);
+
+                context.Data = context.session.Name;
+                context.CommandID = CommandID;
             }
         }
 

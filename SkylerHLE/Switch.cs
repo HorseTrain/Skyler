@@ -4,8 +4,10 @@ using SkylerGraphics.Display;
 using SkylerHLE.Horizon;
 using SkylerHLE.Horizon.Execution;
 using SkylerHLE.Horizon.Handles;
+using SkylerHLE.Horizon.Service.Sessions;
 using SkylerHLE.Input;
 using SkylerHLE.Memory;
+using SkylerHLE.VirtualFS;
 using System;
 using System.Threading;
 
@@ -19,9 +21,12 @@ namespace SkylerHLE
 
         HorizonOS horizonOS                 { get; set; }
         MemoryManager memory                { get; set; }
+        public static RomFS romFS           { get; set; }
 
         public TKWindow MainDisplay         { get; set; }
         public InputManager Input           { get; set; }
+
+        public bool InDock                  { get; set; }
 
         private Switch()
         {
@@ -34,8 +39,8 @@ namespace SkylerHLE
             horizonOS = new HorizonOS();
             memory = new MemoryManager();
 
-            new Thread(CreateDisplay).Start();
-            new Thread(CreateInputManager).Start();
+            //new Thread(CreateDisplay).Start();
+            //new Thread(CreateInputManager).Start();
         }
 
         public void CreateDisplay()
@@ -73,6 +78,11 @@ namespace SkylerHLE
         public static void InitSwitch()
         {
             new Switch();
+        }
+
+        public void LoadRomFS(string path)
+        {
+            romFS = new RomFS(path);
         }
     }
 }
