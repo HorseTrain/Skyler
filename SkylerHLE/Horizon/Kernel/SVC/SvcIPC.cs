@@ -12,7 +12,6 @@ namespace SkylerHLE.Horizon.Kernel.SVC
 {
     public class SvcIPC
     {
-        //<-- https://switchbrew.org/wiki/SVC#ConnectToNamedPort -->
         public static void ConnectToNamedPort(ObjectIndexer<ulong> X)
         {
             string Name = GlobalMemory.GetReader().ReadStringAtAddress(X[1], 8);
@@ -25,7 +24,6 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[1] = session.ID;
         }
 
-        //<-- https://switchbrew.org/wiki/SVC#SendSyncRequest -->
         public static void SendSyncRequest(ObjectIndexer<ulong> X)
         {
             ulong SessionHandle = X[0];

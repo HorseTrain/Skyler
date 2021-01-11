@@ -6,6 +6,8 @@ using System.Text;
 
 namespace SkylerCPU
 {
+    public delegate CpuContext CreateThread();
+
     public class CpuContext
     {
         public object ThreadInformation { get; set; }

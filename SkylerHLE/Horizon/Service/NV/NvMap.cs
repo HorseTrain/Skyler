@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkylerCommon.Debugging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,8 @@ namespace SkylerHLE.Horizon.Service.NV
             this.Size = size;
 
             ID = (uint)Switch.MainOS.Handles.AddObject(this);
+
+            Debug.Log($"Created Map With Size {size}");
         }
 
         //TODO: Make accessing map handles in here.

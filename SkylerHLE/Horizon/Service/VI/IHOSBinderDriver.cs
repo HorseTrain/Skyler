@@ -2,6 +2,7 @@
 using SkylerCommon.Globals;
 using SkylerCommon.Memory;
 using SkylerGraphics.ContextHandler;
+using SkylerHLE.Horizon.IPC;
 using SkylerHLE.Horizon.Service.NV;
 using SkylerHLE.Horizon.Service.Sessions;
 using System;
@@ -20,12 +21,15 @@ namespace SkylerHLE.Horizon.Service.VI
 
         public Dictionary<(string, ulong), ParcelService> Methods;
 
+        public KEvent ReleaseEvent { get; set; }
+
         public IHOSBinderDriver()
         {
             Calls = new Dictionary<ulong, ServiceCall>()
             {
                 {0, TransactParcel },
-                {1, AdjustRefcount}
+                {1, AdjustRefcount },
+                {2, GetNativeHandle}
             }; 
 
             Methods = new Dictionary<(string, ulong), ParcelService>()
@@ -36,6 +40,8 @@ namespace SkylerHLE.Horizon.Service.VI
                 { ("android.gui.IGraphicBufferProducer", 0x3), GraphicBufferProducerDequeueBuffer  },
                 { ("android.gui.IGraphicBufferProducer", 0xe), GraphicBufferPreallocateBuffer      },
             };
+
+            ReleaseEvent = new KEvent();
         }
 
         public ulong TransactParcel(CallContext context)
@@ -80,6 +86,13 @@ namespace SkylerHLE.Horizon.Service.VI
         public ulong AdjustRefcount(CallContext context)
         {
             //TODO:
+
+            return 0;
+        }
+
+        public ulong GetNativeHandle(CallContext context)
+        {
+            context.response.HandleDescriptor = HandleDescriptor.MakeMove((uint)ReleaseEvent.ID);
 
             return 0;
         }

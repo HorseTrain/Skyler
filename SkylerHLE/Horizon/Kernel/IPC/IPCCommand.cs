@@ -207,5 +207,43 @@ namespace SkylerHLE.Horizon.IPC
 
             return ulong.MaxValue;
         }
+
+        public (ulong Position, ulong Size) GetBufferType0x21()
+        {
+            if (PointerDescriptors.Count != 0 &&
+                PointerDescriptors[0].Address != 0 &&
+                PointerDescriptors[0].Size != 0)
+            {
+                return (PointerDescriptors[0].Address, PointerDescriptors[0].Size);
+            }
+
+            if (PointerDescriptors.Count != 0 &&
+                PointerDescriptors[0].Address != 0 &&
+                PointerDescriptors[0].Size != 0)
+            {
+                return (PointerDescriptors[0].Address, PointerDescriptors[0].Size);
+            }
+
+            return (0, 0);
+        }
+
+        public (ulong Position, ulong Size) GetBufferType0x22()
+        {
+            if (ReceiveLists.Count != 0 &&
+                ReceiveLists[0].Address != 0 &&
+                ReceiveLists[0].Size != 0)
+            {
+                return (ReceiveLists[0].Address, ReceiveLists[0].Size);
+            }
+
+            if (ReceiveLists.Count != 0 &&
+                ReceiveLists[0].Address != 0 &&
+                ReceiveLists[0].Size != 0)
+            {
+                return (ReceiveLists[0].Address, ReceiveLists[0].Size);
+            }
+
+            return (0, 0);
+        }
     }
 }

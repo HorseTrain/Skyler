@@ -1,0 +1,15 @@
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\bin\Release\net5.0\SkylerShader.deps.json
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\bin\Release\net5.0\SkylerShader.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\bin\Release\net5.0\ref\SkylerShader.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\bin\Release\net5.0\SkylerShader.pdb
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\bin\Release\net5.0\SkylerCommon.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\bin\Release\net5.0\SkylerCommon.pdb
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\obj\Release\net5.0\SkylerShader.csprojAssemblyReference.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\obj\Release\net5.0\SkylerShader.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\obj\Release\net5.0\SkylerShader.AssemblyInfoInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\obj\Release\net5.0\SkylerShader.AssemblyInfo.cs
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\obj\Release\net5.0\SkylerShader.csproj.CoreCompileInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\obj\Release\net5.0\SkylerShader.csproj.CopyComplete
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\obj\Release\net5.0\SkylerShader.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\obj\Release\net5.0\ref\SkylerShader.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerShader\obj\Release\net5.0\SkylerShader.pdb

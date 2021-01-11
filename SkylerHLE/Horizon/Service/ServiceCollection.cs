@@ -1,5 +1,6 @@
 ﻿using SkylerCommon.Debugging;
 using SkylerHLE.Horizon.Handles;
+using SkylerHLE.Horizon.Service.ACC;
 using SkylerHLE.Horizon.Service.AppletAE.ApplicationProxy;
 using SkylerHLE.Horizon.Service.FSP;
 using SkylerHLE.Horizon.Service.HID;
@@ -8,6 +9,7 @@ using SkylerHLE.Horizon.Service.NV;
 using SkylerHLE.Horizon.Service.Pctl;
 using SkylerHLE.Horizon.Service.PPC;
 using SkylerHLE.Horizon.Service.ServiceGenerator;
+using SkylerHLE.Horizon.Service.SET;
 using SkylerHLE.Horizon.Service.TIME;
 using System;
 using System.Collections.Generic;
@@ -35,6 +37,8 @@ namespace SkylerHLE.Horizon.Service
 
             switch (name)
             {
+                case "acc:u0": return Acc.Call(context);
+
                 case "apm": 
                     
                     switch (context.CommandID)
@@ -66,13 +70,7 @@ namespace SkylerHLE.Horizon.Service
 
                     switch (context.CommandID)
                     {
-                        case 0:
-
-                            SharedMemory HidData = (SharedMemory)Switch.MainOS.Handles[(uint)Switch.MainOS.HidHandle.ID];
-
-                            collection = new IAppletResource(HidData);
-
-                            break;
+                        case 0: collection = new IAppletResource((SharedMemory)Switch.MainOS.Handles[(uint)Switch.MainOS.HidHandle.ID]);break;
                     }
 
                     break;
@@ -81,11 +79,7 @@ namespace SkylerHLE.Horizon.Service
 
                     switch (context.CommandID)
                     {
-                        case 0:
-
-                            collection = new Logger();
-                            
-                            break;
+                        case 0: collection = new Logger(); break;
                     }
 
                     break;
@@ -100,16 +94,10 @@ namespace SkylerHLE.Horizon.Service
 
                     break;
 
-                case "nvdrv:a":
+                case "set": return set.Call(context);
 
-                    switch (context.CommandID)
-                    {
-                        case 0: return nvdrv.Open(context);
-                        case 1: return Ioctl.DrvIoctl(context);
-                        case 3: return nvdrv.Initialize(context);
-                    }
-
-                    break;
+                case "nvdrv:a": return nvdrv.Call(context);
+                case "nvdrv": return nvdrv.Call(context);
 
                 case "vi:m":
 
@@ -134,19 +122,14 @@ namespace SkylerHLE.Horizon.Service
                     switch (context.CommandID)
                     {
                         case 0: collection = new ISystemClock(0); break;
+                        case 1: collection = new ISystemClock(0); break;
+                        case 3: collection = new ITimeZoneService(); break;
+                        case 4: collection = new ISystemClock(0); break;
                     }
 
                     break;
 
-                case "fsp-srv":
-
-                    switch (context.CommandID)
-                    {
-                        case 1: collection = new IFileSystemProxy(); break;
-                        case 200: collection = new IStorage(); break;
-                    }
-
-                    break;
+                case "fsp-srv": return FSP_SRV.Call(context);
             }
 
             if (collection == null)

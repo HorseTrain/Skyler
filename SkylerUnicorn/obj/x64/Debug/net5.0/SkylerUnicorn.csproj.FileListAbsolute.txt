@@ -2,6 +2,7 @@ C:\Users\Raymond\source\repos\Skyler\SkylerUnicorn\bin\x64\Debug\net5.0\SkylerUn
 C:\Users\Raymond\source\repos\Skyler\SkylerUnicorn\bin\x64\Debug\net5.0\SkylerUnicorn.dll
 C:\Users\Raymond\source\repos\Skyler\SkylerUnicorn\bin\x64\Debug\net5.0\ref\SkylerUnicorn.dll
 C:\Users\Raymond\source\repos\Skyler\SkylerUnicorn\bin\x64\Debug\net5.0\SkylerUnicorn.pdb
+C:\Users\Raymond\source\repos\Skyler\SkylerUnicorn\obj\x64\Debug\net5.0\SkylerUnicorn.csprojAssemblyReference.cache
 C:\Users\Raymond\source\repos\Skyler\SkylerUnicorn\obj\x64\Debug\net5.0\SkylerUnicorn.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Raymond\source\repos\Skyler\SkylerUnicorn\obj\x64\Debug\net5.0\SkylerUnicorn.AssemblyInfoInputs.cache
 C:\Users\Raymond\source\repos\Skyler\SkylerUnicorn\obj\x64\Debug\net5.0\SkylerUnicorn.AssemblyInfo.cs

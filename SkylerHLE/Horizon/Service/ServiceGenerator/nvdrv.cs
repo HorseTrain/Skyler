@@ -1,4 +1,8 @@
-﻿using SkylerHLE.Horizon.Handles;
+﻿using SkylerCommon.Debugging;
+using SkylerHLE.Horizon.Handles;
+using SkylerHLE.Horizon.IPC;
+using SkylerHLE.Horizon.Service.NV;
+using SkylerHLE.Horizon.Service.Sessions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +13,8 @@ namespace SkylerHLE.Horizon.Service.ServiceGenerator
 {
     public static class nvdrv
     {
+        static KEvent Event = new KEvent();
+
         public static ulong Open(CallContext context)
         {
             context.Reader.Seek(context.request.SendDescriptors[0].Address);
@@ -31,6 +37,35 @@ namespace SkylerHLE.Horizon.Service.ServiceGenerator
             context.Writer.Write(0);
 
             return 0;
+        }
+
+        public static ulong SetAruid(CallContext context)
+        {
+            context.Writer.Write(0);
+
+            return 0;
+        }
+
+        public static ulong QueryEvent(CallContext context)
+        {
+            context.response.HandleDescriptor = HandleDescriptor.MakeCopy((uint)Event.ID);
+
+            context.Writer.Write(0);
+
+            return 0;
+        }
+
+        public static ulong Call(CallContext context)
+        {
+            switch (context.CommandID)
+            {
+                case 0: return nvdrv.Open(context);
+                case 1: return Ioctl.DrvIoctl(context);
+                case 3: return nvdrv.Initialize(context);
+                case 4: return QueryEvent(context);
+                case 8: return SetAruid(context);
+                default: Debug.LogError(context.CommandID,true); return 0;
+            }
         }
     }
 }

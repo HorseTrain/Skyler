@@ -1,0 +1,17 @@
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\bin\Release\net5.0\SkylerGraphics.deps.json
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\bin\Release\net5.0\SkylerGraphics.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\bin\Release\net5.0\ref\SkylerGraphics.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\bin\Release\net5.0\SkylerGraphics.pdb
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\bin\Release\net5.0\SkylerCommon.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\bin\Release\net5.0\SkylerShader.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\bin\Release\net5.0\SkylerCommon.pdb
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\bin\Release\net5.0\SkylerShader.pdb
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\obj\Release\net5.0\SkylerGraphics.csprojAssemblyReference.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\obj\Release\net5.0\SkylerGraphics.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\obj\Release\net5.0\SkylerGraphics.AssemblyInfoInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\obj\Release\net5.0\SkylerGraphics.AssemblyInfo.cs
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\obj\Release\net5.0\SkylerGraphics.csproj.CoreCompileInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\obj\Release\net5.0\SkylerGraphics.csproj.CopyComplete
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\obj\Release\net5.0\SkylerGraphics.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\obj\Release\net5.0\ref\SkylerGraphics.dll
+C:\Users\Raymond\source\repos\Skyler\SkylerGraphics\obj\Release\net5.0\SkylerGraphics.pdb

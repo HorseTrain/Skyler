@@ -13,7 +13,7 @@ namespace SkylerHLE.Memory
 
         public const ulong AddressSpaceBegin = 0x8000000;
 
-        public const ulong HeapBase = 0x10000000;
+        public const ulong HeapBase = 0x30000000;
 
         public const ulong MainStackSize = 0x100000;
         public const ulong MainStackAddress = RamSize - MainStackSize;
@@ -22,6 +22,7 @@ namespace SkylerHLE.Memory
         //Right before stack
         public const ulong TlsSize = 0x20000;
         public const ulong TlsCollectionAddress = MainStackAddress - TlsSize;
+        public static ulong OpenedTLS = 0;
 
         public const int PageBit = 12;
 

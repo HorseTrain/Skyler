@@ -18,10 +18,13 @@ namespace SkylerHLE.Horizon.Service.VI
         {
             {100,   GetRelayService},
             {101,   GetSystemDisplayService},
+            {103,   GetRelayService}, //Is actually GetIndirectDisplayTransactionService
             {102,   GetManagerDisplayService},
             {1010,  OpenDisplay },
             {2101,  SetLayerScalingMode },
             {2020,  OpenLayer},
+            {2030,  CreateStrayLayer},
+            {5202,  GetDisplayVsyncEvent},
         };
 
 
@@ -63,6 +66,15 @@ namespace SkylerHLE.Horizon.Service.VI
             return 0;
         }
 
+        public static ulong GetDisplayVsyncEvent(CallContext context)
+        {
+            string name = context.Reader.ReadString();
+
+            context.response.HandleDescriptor = HandleDescriptor.MakeCopy((uint)Switch.MainSwitch.VsyncEvent.ID);
+
+            return 0;
+        }
+
         public static ulong OpenLayer(CallContext context)
         {
             ulong LayerID = context.Reader.ReadStruct<ulong>();
@@ -75,6 +87,27 @@ namespace SkylerHLE.Horizon.Service.VI
             MemoryWriter writer = GlobalMemory.GetWriter(ParcelPtr);
             writer.WriteStruct(Parcel);
 
+            context.Writer.Write((ulong)Parcel.Length);
+
+            return 0;
+        }
+
+        public static ulong CreateStrayLayer(CallContext context)
+        {
+            ulong LayeredFlags = context.Reader.ReadStruct<ulong>();
+            ulong DisplayId = context.Reader.ReadStruct<ulong>();
+
+            DisplayContext display = (DisplayContext)Switch.MainOS.Handles.GetObject(DisplayId);
+
+            ulong Address = context.request.ReceiveDescriptors[0].Address;
+
+            byte[] Parcel = MakeGraphicsBufferProcedure(Address);
+
+            MemoryWriter writer = GlobalMemory.GetWriter(Address);
+
+            writer.WriteStruct(Parcel);
+
+            context.Writer.Write(0L);
             context.Writer.Write((ulong)Parcel.Length);
 
             return 0;
