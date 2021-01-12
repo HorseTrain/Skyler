@@ -23,14 +23,11 @@ namespace SkylerHLE.Memory
 
         public void MapMemory(ulong Address, ulong Size, MemoryPermission Permission,MemoryType Type)
         {
-            if (false)
-            {
-                if (Address != MemoryMetaData.PageRoundDown(Address))
-                    Debug.LogWarning("Invalid Page Size, Automatically Fixing.");
+            if (Address != MemoryMetaData.PageRoundDown(Address))
+               Debug.LogWarning("Invalid Page Size, Automatically Fixing.");
 
-                if (Size != MemoryMetaData.PageRoundUp(Size))
-                    Debug.LogWarning("Invalid Page Size, Automatically Fixing.");
-            }
+            if (Size != MemoryMetaData.PageRoundUp(Size))
+               Debug.LogWarning("Invalid Page Size, Automatically Fixing.");
 
             Address = MemoryMetaData.PageRoundDown(Address);
             Size = MemoryMetaData.PageRoundUp(Size);
@@ -43,7 +40,7 @@ namespace SkylerHLE.Memory
                 RequestPage(i).mapped = true;
             }
 
-            //Debug.Log($"Mapped Memory: {StringTools.FillStringBack(Permission,' ',20)} {StringTools.FillStringBack(Type, ' ', 15)},{StringTools.FillStringBack(Address, ' ', 15)}, With Size: {StringTools.FillStringBack(Size, ' ', 20)}");
+            Debug.Log($"Mapped Memory: {StringTools.FillStringBack(Permission,' ',20)} {StringTools.FillStringBack(Type, ' ', 15)},{StringTools.FillStringBack(Address, ' ', 15)}, With Size: {StringTools.FillStringBack(Size, ' ', 20)}");
         }
 
         public MemoryMapInfo GetMemoryInfo(ulong Address)

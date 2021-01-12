@@ -14,12 +14,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.XPath;
 
 namespace SkylerHLE.Horizon.Kernel.SVC
 {
     static class SvcIO
     {
+        //<-- https://switchbrew.org/wiki/SVC#OutputDebugString --> //Self explanatory
         public static void OutputDebugString(ObjectIndexer<ulong> X)
         {
             ulong Address = X[0];
@@ -32,10 +32,10 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[0] = 0;
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#GetSystemTick --> //Self explanatory
         public static void GetSystemTick(ObjectIndexer<ulong> X) => X[0] = GlobalCounter.cntpct_el0;
 
-        static Random rng = new Random();
-
+        //<-- https://switchbrew.org/wiki/SVC#GetInfo --> //Self explanatory
         public static void GetInfo(ObjectIndexer<ulong> X)
         {
             ulong InfoType = X[1];
@@ -62,7 +62,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
                 case 6: X[1] = GlobalMemory.RamSize - MemoryMetaData.AddressSpaceBegin; break;
                 case 7: X[1] = 806486016 + MemoryMetaData.CurrentHeapSize; break;
 
-                case 11: X[1] = 0; break;//(ulong)rng.Next() + (ulong)(rng.Next() << 32); break; //No Rng here :)
+                case 11: X[1] = 0; break; //No Rng here :)
                 case 12: X[1] = MemoryMetaData.AddressSpaceBegin; break;
                 case 13: X[1] = 4160749568; break;  //TODO: Put this in a constant.
                 case 14: X[1] = 0x10000000; break;  //TODO: Put this in a constant.
@@ -73,6 +73,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             }
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#CloseHandle -->// Self explanatory
         public static void CloseHandle(ObjectIndexer<ulong> X)
         {
             Switch.MainOS.Handles.RemoveObject(X[0]);
@@ -80,38 +81,72 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[0] = 0;
         }
 
-        public static void CreateThread(ObjectIndexer<ulong> X)
-        {
-            ulong Entry = X[1];
-            ulong ThreadContext = X[2];
-            ulong StackTop = X[3];
-            int Priority = (int)X[4];
-            int ProcessorId = (int)X[5];
-
-            if (ProcessorId == -2)
-            {
-                ProcessorId = 0;
-            }
-            else if ((uint)ProcessorId > 3)
-            {
-                Debug.LogError("",true);
-            }
-
-            KThread thread = Switch.MainOS.scheduler.CreateThread(Process.MainProcess,Entry,StackTop,ThreadContext,(ulong)Priority);
-
-            X[0] = 0;
-            X[1] = thread.ID;
-        }
-
-        public static void StartThread(ObjectIndexer<ulong> X)
+        //<-- https://switchbrew.org/wiki/SVC#ResetSignal -->
+        public static void ResetSignal(ObjectIndexer<ulong> X)
         {
             ulong Handle = X[0];
 
-            Switch.MainOS.scheduler.DetatchAndStartThread(Handle);
+            KEvent Event = (KEvent)Switch.MainOS.Handles[Handle];
+
+            //TODO:
 
             X[0] = 0;
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#WaitSynchronization --> //This emulates events.
+        public static void WaitSynchronization(ObjectIndexer<ulong> X)
+        {
+            //TODO:
+
+            ulong HandlePointer = X[1];
+            ulong HandleCount = X[2];
+            ulong TimeOut = X[3];
+
+            if (HandleCount > 64)
+            {
+                X[0] = 0xEE01;
+            }
+
+            //KThread thread = (KThread)((CpuContext)X.parent).ThreadInformation;
+
+            Scheduler scheduler = Switch.MainOS.scheduler;
+
+            WaitHandle[] WaitHandles = scheduler.GetEventHandles(GlobalMemory.GetReader(HandlePointer), HandleCount);
+
+            scheduler.AddSuspendedThread(WaitHandles[HandleCount]);
+
+            int HandleResult = 0;
+            ulong Result = 0;
+
+            if (TimeOut == ulong.MaxValue)
+            {
+                HandleResult = WaitHandle.WaitAny(WaitHandles);
+            }
+            else
+            {
+                HandleResult = WaitHandle.WaitAny(WaitHandles, Scheduler.GetTimeMS(TimeOut));
+            }
+
+            if (HandleResult == WaitHandle.WaitTimeout)
+            {
+                Result = 59905;
+            }
+            else if (HandleResult == WaitHandles.Length + 1)
+            {
+                //TODO:
+            }
+
+            scheduler.UnSuspendThread(WaitHandles[HandleCount]);
+
+            X[0] = Result;
+
+            if (Result == 0)
+            {
+                X[1] = (ulong)HandleResult;
+            }
+        }
+
+        //<-- https://switchbrew.org/wiki/SVC#SleepThread --> //Self explanatory
         public static void SleepThread(ObjectIndexer<ulong> X)
         {
             ulong Nanoseconds = X[0];
@@ -121,6 +156,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             Thread.Sleep((int)(Nanoseconds / 1000000));
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#GetThreadPriority --> //Self explanatory
         public static void GetThreadPriority(ObjectIndexer<ulong> X)
         {
             ulong Handle = X[1];
@@ -131,6 +167,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[1] = thread.ThreadPriority;
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#SetThreadPriority -->
         public static void SetThreadPriority(ObjectIndexer<ulong> X)
         {
             ulong Handle = X[0];
@@ -143,17 +180,13 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[0] = 0;
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#GetThreadId --> //Self explanatory
         public static void GetThreadId(ObjectIndexer<ulong> X)
         {
             ulong Handle = X[1];
 
             X[0] = 0;
             X[1] = ((KThread)Switch.MainOS.Handles[Handle]).ID;
-        }
-
-        public static void Break(ObjectIndexer<ulong> X)
-        {
-            Debug.ThrowException(new Exception($"Pain from {((KThread)((CpuContext)X.parent).ThreadInformation).ID}"));
         }
     }
 }

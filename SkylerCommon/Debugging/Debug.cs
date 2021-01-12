@@ -8,24 +8,19 @@ namespace SkylerCommon.Debugging
     {
         public static bool ProgramInDebugMode { get; set; } = true;
 
-        static object OneAtATime { get; set; } = new object();
-
         //TODO: Add importance checks to not log everything.
         static void LogWithColor(object message,ConsoleColor color = ConsoleColor.White)
         {
-            lock (OneAtATime)
+            Console.ForegroundColor = color;
+
+            //TODO: Add time markers.
+
+            if (ProgramInDebugMode)
             {
-                Console.ForegroundColor = color;
-
-                //TODO: Add time markers.
-
-                if (ProgramInDebugMode)
-                {
-                    Console.WriteLine(message);
-                }
-
-                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine(message);
             }
+
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         public static void LogWarning(object message) => LogWithColor($"Warning: {message}",ConsoleColor.Yellow);
@@ -44,7 +39,7 @@ namespace SkylerCommon.Debugging
         {
             LogError("Indefinite emulation hault.");
 
-            ThrowNotImplementedException();
+            while (true) ;
         }
 
         public static void ThrowException(Exception exception) => throw exception;

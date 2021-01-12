@@ -14,8 +14,6 @@ namespace SkylerHLE.Horizon.Kernel.SVC
     {
         //<-- https://switchbrew.org/wiki/SVC#QueryMemory -->
 
-        static int i = 0;
-
         //Pain 
         public static void QueryMemory(ObjectIndexer<ulong> X)
         {
@@ -29,7 +27,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
                 Map = new MemoryMapInfo(4294967296, 18446744069414584320, 0,MemoryPermission.None,MemoryType.Reserved); //TODO: Formulate size with constants?
             }
 
-            //Debug.Log($"Queried Memory From: {StringTools.FillStringBack(Address,' ',20)} With: {Map}");
+            Debug.Log($"Queried Memory With: {Map}");
 
             GlobalMemory.GetWriter().WriteStruct<ulong>(Destination, Map.Address); 
             GlobalMemory.GetWriter().WriteStruct<ulong>(Destination + 0x08, Map.Size);
@@ -40,22 +38,17 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             GlobalMemory.GetWriter().WriteStruct<uint>(Destination + 0x20, 0);
             GlobalMemory.GetWriter().WriteStruct<uint>(Destination + 0x24, 0);
 
-            //Console.WriteLine(Map.Address);
-
-            i++;
-
             X[0] = 0;
             X[1] = 0;
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#SetHeapSize -->
         public static void SetHeapSize(ObjectIndexer<ulong> X)
         {
             ulong Size = X[1];
 
             //TODO: Compare size with process size, then unmap if size is greater.
-            Switch.Memory.MapMemory(MemoryMetaData.HeapBase,Size,MemoryPermission.ReadAndWrite,MemoryType.Heap);
-
-            //TODO: Add unmap
+            Switch.Memory.MapMemory(MemoryMetaData.HeapBase,Size,MemoryPermission.ReadAndWrite,MemoryType.MappedMemory);
 
             MemoryMetaData.CurrentHeapSize = Size;
 
@@ -63,6 +56,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[0] = 0;
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#SetMemoryAttribute -->
         public static void SetMemoryAttribute(ObjectIndexer<ulong> X)
         {
             ulong Address = X[0];
@@ -77,21 +71,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[0] = 0;
         }
 
-        public static void MapMemory(ObjectIndexer<ulong> X)
-        {
-            ulong Des = X[0];
-            ulong Source = X[1];
-            ulong Size = X[3];
-
-            MemoryMapInfo Map = Switch.Memory.GetMemoryInfo(Source);
-
-            //Console.WriteLine(Map.tp);
-
-            Switch.Memory.MapMemory(Des,Size,MemoryPermission.None,Map.Type);
-
-            X[0] = 0;
-        }
-
+        //<-- https://switchbrew.org/wiki/SVC#CreateTransferMemory -->
         public static void CreateTransferMemory(ObjectIndexer<ulong> X)
         {
             ulong Address = X[1];
@@ -106,6 +86,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[1] = transferMemory.Handle;
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#MapSharedMemory -->
         public static void MapSharedMemory(ObjectIndexer<ulong> X)
         {
             ulong Handle = X[0];
@@ -135,6 +116,39 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             X[0] = 0;
         }
 
+        //<-- https://switchbrew.org/wiki/SVC#WaitProcessWideKeyAtomic -->
+        public static void WaitProcessWideKeyAtomic(ObjectIndexer<ulong> X)
+        {
+            ulong KeyAddress = X[0];
+            ulong TagAddress = X[1];
+            int Tag = (int)X[2];
+            ulong TimeOut = X[3];
+
+            KThread thread = (KThread)((CpuContext)X.parent).ThreadInformation;
+
+            Scheduler scheduler = MainOS.scheduler;
+
+            scheduler.MutexLockAddress(KeyAddress,TagAddress,Tag,TimeOut,thread);
+
+            X[0] = 0;
+        }
+
+        //<-- https://switchbrew.org/wiki/SVC#SignalProcessWideKey -->
+        public static void SignalProcessWideKey(ObjectIndexer<ulong> X)
+        {
+            ulong Address = X[0];
+            int Tag = (int)X[1];
+
+            KThread thread = (KThread)((CpuContext)X.parent).ThreadInformation;
+
+            Scheduler scheduler = MainOS.scheduler;
+
+            scheduler.MutexUnlockAddress(Address,Tag);
+
+            X[0] = 0;
+        }
+
+        //<-- https://switchbrew.org/wiki/SVC#MapPhysicalMemory -->
         public static void MapPhysicalMemory(ObjectIndexer<ulong> X)
         {
             ulong Address = X[0];

@@ -1,11 +1,9 @@
 ﻿using SkylerCommon.Debugging;
 using SkylerCommon.Utilities.Tools;
 using SkylerCPU;
-using SkylerHLE.Horizon.Execution;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Threading;
 
 namespace SkylerHLE.Horizon.Kernel.SVC
 {
@@ -16,14 +14,10 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             if (Calls[ID] != null)
             {
                 Calls[ID](Registers);
-
-                //Debug.Log($"Called { Calls[ID].Method.Name} From {GetThread(Registers).ID}");
-
-                //Thread.Sleep(10);
             }
             else
             {
-                Debug.LogError($"Unknwon SVC Call. 0x{StringTools.FillStringFront(ID.ToString("X"),'0',2)} From Thread: {StringTools.FillStringBack(GetThread(Registers).ID,' ',20)}",true);
+                Debug.LogError($"Unknwon SVC Call. 0x{StringTools.FillStringFront(ID.ToString("X"),'0',2)}",true);
             }
         }
 
@@ -33,12 +27,12 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             { 0x01, SvcMemory.SetHeapSize },
             { 0x02, null },
             { 0x03, SvcMemory.SetMemoryAttribute  }, //TODO:
-            { 0x04, SvcMemory.MapMemory },
+            { 0x04, null },
             { 0x05, null },
             { 0x06, SvcMemory.QueryMemory },
             { 0x07, null },
-            { 0x08, SvcIO.CreateThread },
-            { 0x09, SvcIO.StartThread },
+            { 0x08, null },
+            { 0x09, null },
             { 0x0A, null },
             { 0x0B, SvcIO.SleepThread },
             { 0x0C, SvcIO.GetThreadPriority },
@@ -52,13 +46,13 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             { 0x14, null }, //TODO:
             { 0x15, SvcMemory.CreateTransferMemory },
             { 0x16, SvcIO.CloseHandle },
-            { 0x17, SvcSync.ResetSignal },
-            { 0x18, SvcSync.WaitSynchronization },
+            { 0x17, null },
+            { 0x18, SvcIO.WaitSynchronization },
             { 0x19, null },
-            { 0x1A, SvcSync.ArbitrateLock },
+            { 0x1A, null },
             { 0x1B, null },
-            { 0x1C, SvcSync.WaitProcessWideKeyAtomic },
-            { 0x1D, SvcSync.SignalProcessWideKey },
+            { 0x1C, SvcMemory.WaitProcessWideKeyAtomic },
+            { 0x1D, SvcMemory.SignalProcessWideKey },
             { 0x1E, SvcIO.GetSystemTick },
             { 0x1F, SvcIPC.ConnectToNamedPort },
             { 0x20, null },
@@ -67,7 +61,7 @@ namespace SkylerHLE.Horizon.Kernel.SVC
             { 0x23, null },
             { 0x24, null },
             { 0x25, SvcIO.GetThreadId },
-            { 0x26, SvcIO.Break },
+            { 0x26, null },
             { 0x27, SvcIO.OutputDebugString },
             { 0x28, null },
             { 0x29, SvcIO.GetInfo },
@@ -160,8 +154,5 @@ namespace SkylerHLE.Horizon.Kernel.SVC
 
         //TODO: Maybe place this somewhere else?
         public static void SvcLog(string message) => Debug.Log($"SVC: {message}");
-
-        public static KThread GetThread(ObjectIndexer<ulong> obj) => (KThread)((CpuContext)obj.parent).ThreadInformation;
-        public static KThread GetThread(ulong ID) => (KThread)Switch.MainOS.Handles[ID];
     }
 }

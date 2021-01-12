@@ -9,7 +9,6 @@ using SkylerHLE.Input;
 using SkylerHLE.Memory;
 using SkylerHLE.VirtualFS;
 using System;
-using System.IO;
 using System.Threading;
 
 namespace SkylerHLE
@@ -24,10 +23,6 @@ namespace SkylerHLE
         MemoryManager memory                { get; set; }
         public static RomFS romFS           { get; set; }
 
-        public bool ContextReady            { get; set; }
-
-        //I want to move these somewhere else
-        public KEvent VsyncEvent            { get; set; }
         public TKWindow MainDisplay         { get; set; }
         public InputManager Input           { get; set; }
 
@@ -44,9 +39,8 @@ namespace SkylerHLE
             horizonOS = new HorizonOS();
             memory = new MemoryManager();
 
-            OperationFileData.Setup();
-
-            new Thread(CreateDisplay).Start();
+            //new Thread(CreateDisplay).Start();
+            //new Thread(CreateInputManager).Start();
         }
 
         public void CreateDisplay()
@@ -54,9 +48,6 @@ namespace SkylerHLE
             MainDisplay = new TKWindow();
 
             MainDisplay.End = HandleEmulationEnd;
-            MainDisplay.ScreenUpdate = ScreenUpdate;
-            Input = new InputManager();
-            VsyncEvent = new KEvent();
 
             MainDisplay.Start();
         }
@@ -92,15 +83,6 @@ namespace SkylerHLE
         public void LoadRomFS(string path)
         {
             romFS = new RomFS(path);
-        }
-
-        public void ScreenUpdate()
-        {
-            ContextReady = true;
-
-            Input.Update(MainDisplay);
-
-            VsyncEvent.WaitEvent.Set();
         }
     }
 }

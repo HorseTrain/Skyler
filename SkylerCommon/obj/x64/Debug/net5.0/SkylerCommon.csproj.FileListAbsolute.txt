@@ -2,7 +2,6 @@ C:\Users\Raymond\source\repos\Skyler\SkylerCommon\bin\x64\Debug\net5.0\SkylerCom
 C:\Users\Raymond\source\repos\Skyler\SkylerCommon\bin\x64\Debug\net5.0\SkylerCommon.dll
 C:\Users\Raymond\source\repos\Skyler\SkylerCommon\bin\x64\Debug\net5.0\ref\SkylerCommon.dll
 C:\Users\Raymond\source\repos\Skyler\SkylerCommon\bin\x64\Debug\net5.0\SkylerCommon.pdb
-C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\x64\Debug\net5.0\SkylerCommon.csprojAssemblyReference.cache
 C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\x64\Debug\net5.0\SkylerCommon.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\x64\Debug\net5.0\SkylerCommon.AssemblyInfoInputs.cache
 C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\x64\Debug\net5.0\SkylerCommon.AssemblyInfo.cs

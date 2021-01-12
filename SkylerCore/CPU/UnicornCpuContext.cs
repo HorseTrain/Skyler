@@ -2,7 +2,6 @@
 using SkylerCommon.Memory;
 using SkylerCPU;
 using SkylerHLE;
-using SkylerHLE.Horizon.Execution;
 using SkylerHLE.Horizon.Kernel.SVC;
 using SkylerUnicorn;
 using System;
@@ -53,7 +52,5 @@ namespace SkylerCore.CPU
         {
             engine.Step(0);
         }
-
-        public static UnicornCpuContext CreateContext() => new UnicornCpuContext();
     }
 }

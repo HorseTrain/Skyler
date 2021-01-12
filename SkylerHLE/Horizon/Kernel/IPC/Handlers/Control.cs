@@ -1,5 +1,4 @@
 ﻿using SkylerCommon.Debugging;
-using SkylerHLE.Horizon.IPC;
 using SkylerHLE.Horizon.Service;
 using SkylerHLE.Horizon.Service.Sessions;
 using System;
@@ -21,17 +20,6 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
             {
                 case 0: ConvertKSession(context); break;
                 case 3: ResponseHandler.FillResponse(context.response,0,0x500); break; //What is this?
-                case 4:
-
-                    int unk = context.Reader.ReadStruct<int>();
-
-                    int handle = (int)Switch.MainOS.Handles.AddObject(new object());
-
-                    context.response.HandleDescriptor = HandleDescriptor.MakeMove((uint)handle);
-
-                    context.request = ResponseHandler.FillResponse(context.response,0);
-                    
-                    break;
                 default: Debug.ThrowNotImplementedException(CommandID.ToString()); break;
             }
         }

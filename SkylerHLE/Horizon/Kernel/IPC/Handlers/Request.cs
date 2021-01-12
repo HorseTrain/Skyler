@@ -42,7 +42,7 @@ namespace SkylerHLE.Horizon.Kernel.IPC.Handlers
 
                     context.response = ResponseHandler.FillResponse(context.response, result, stream.ToArray());
 
-                    //SupervisorCallCollection.SvcLog($"Called Service: {context.Call.Method.Name} {context.session.Name} {StringTools.FillStringBack(CommandID, ' ', 5)}");
+                    SupervisorCallCollection.SvcLog($"Called Service: {StringTools.FillStringBack(context.session.Name, ' ', 20)} {StringTools.FillStringBack(CommandID, ' ', 5)}");
                 }
             }
         }

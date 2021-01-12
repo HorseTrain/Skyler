@@ -20,4 +20,12 @@
     <ProjectReference Include="..\SkylerGraphics\SkylerGraphics.csproj" />
   </ItemGroup>
 
+<<<<<<< HEAD
+=======
+  <ItemGroup>
+    <Folder Include="Horizon\Service\Set\" />
+    <Folder Include="Horizon\Service\ServiceObjects\NewFolder\" />
+  </ItemGroup>
+
+>>>>>>> parent of 62d2423... Added More!!
 </Project>

@@ -4,7 +4,6 @@ using SkylerCore.CPU;
 using SkylerGraphics.ContextHandler;
 using SkylerHLE;
 using SkylerHLE.Horizon;
-using SkylerHLE.Horizon.Execution;
 using SkylerHLE.Memory;
 using System;
 using static SkylerHLE.Switch;
@@ -25,9 +24,8 @@ namespace Skyler
             //string path = @"D:\Games\Roms\Super Mario Odyssey";
             string path = @"D:\Games\Roms\Sonic Mania";
             //string path = @"C:\Users\Raymond\Desktop\application\spacenx.nso";
-            //string path = @"C:\Users\Raymond\Desktop\application\oxidgb.10-print.nso";
 #else
-            string path = @"C:\Users\Raymond\Desktop\application\oxidgb.10-print.nso";
+            string path = args[0];
 
             Debug.ProgramInDebugMode = true;
 #endif
@@ -60,9 +58,7 @@ namespace Skyler
 
             FrameBuffers.MainFrameBuffer = MemoryMetaData.AddressSpaceBegin;
 
-            Scheduler.ThreadGenerator = UnicornCpuContext.CreateContext;
-
-            process.BeginProgram();
+            process.BeginProgram<UnicornCpuContext>();
         }
     }
 }
