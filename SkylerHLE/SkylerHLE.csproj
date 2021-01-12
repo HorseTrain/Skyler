@@ -20,8 +20,4 @@
     <ProjectReference Include="..\SkylerGraphics\SkylerGraphics.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Horizon\Service\ServiceObjects\NewFolder\" />
-  </ItemGroup>
-
 </Project>
