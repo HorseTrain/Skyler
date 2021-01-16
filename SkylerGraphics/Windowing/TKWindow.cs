@@ -8,10 +8,11 @@ using SkylerGraphics.ContextHandler;
 using SkylerGraphics.Texture;
 using SkylerShader.NativeShader;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using System.Diagnostics;
 
 namespace SkylerGraphics.Display
 {
-    public delegate void CloseFunction();
+    public delegate void ExternalHook();
 
     public unsafe class TKWindow : GameWindow
     {
@@ -72,7 +73,8 @@ void main()
 
         }
 
-        public CloseFunction End;
+        public ExternalHook End;
+        public ExternalHook ScreenUpdate;
 
         public void Start()
         {
@@ -107,8 +109,14 @@ void main()
             GL.VertexAttribPointer(0,3,VertexAttribPointerType.Float,false,0,0);
             GL.EnableVertexAttribArray(0);
 
+            VSync = VSyncMode.Off;
+
+            Stopwatch timer = new Stopwatch();
+
             while (true)
-            {
+            {             
+                timer.Start();
+
                 ProcessEvents();
 
                 ResizeScreen();
@@ -116,17 +124,26 @@ void main()
                 GL.Clear(ClearBufferMask.ColorBufferBit);
                 GL.ClearColor(0.2f, 0.2f, 0.2f, 1);
 
-                Input();
-
                 RenderFrameBuffer();
 
                 SwapBuffers();
+
+                if (ScreenUpdate != null)
+                {
+                    ScreenUpdate();
+                }
 
                 if (!Exists || IsExiting)
                 {
                     DestroyWindow();
                     break;
                 }
+
+                timer.Stop();
+
+                Title = $"Skyler Nintendo Switch Emulator               Host FrameTime: {timer.ElapsedMilliseconds}";
+
+                timer.Reset();
             }
 
             End();
@@ -179,6 +196,8 @@ void main()
             {
                 for (int y = 0; y < (int)GlobalsGraphics.ScreenHeight; y++ )
                 {
+                    //GetSwizzleOffset(x, y);
+
                     reader.Seek((ulong)GetSwizzleOffset(x,y));
 
                     FrameBufferTexture.Buffer[(x + y * (int)GlobalsGraphics.ScreenWidth)] = reader.ReadStruct<int>();
@@ -189,55 +208,6 @@ void main()
             FrameBufferTexture.UseTexture();
 
             GL.DrawArrays(BeginMode.Quads,0,12);
-        }
-
-        public void Input()
-        {
-            int State = 0;
-
-            if (KeyboardState.IsKeyDown(Keys.Up))
-            {
-                State |= 0x2000;
-            }
-
-            if (KeyboardState.IsKeyDown(Keys.Down))
-            {
-                State |= 0x8000;
-            }
-
-            if (KeyboardState.IsKeyDown(Keys.Left))
-            {
-                State |= 0x1000;
-            }
-
-            if (KeyboardState.IsKeyDown(Keys.Right))
-            {
-                State |= 0x4000;
-            }
-
-            if (KeyboardState.IsKeyDown(Keys.Z))
-            {
-                State |= 1;
-            }
-
-            if (KeyboardState.IsKeyDown(Keys.X))
-            {
-                State |= 0x8;
-            }
-
-            if (KeyboardState.IsKeyDown(Keys.Enter))
-            {
-                State |= 0x400;
-            }
-
-            if (KeyboardState.IsKeyDown(Keys.Tab))
-            {
-                State |= 0x800;
-            }
-
-            MemoryWriter writer = GlobalMemory.GetWriter();
-
-            writer.WriteStruct(HidHandle + 0xae38, State);
         }
     }
 }

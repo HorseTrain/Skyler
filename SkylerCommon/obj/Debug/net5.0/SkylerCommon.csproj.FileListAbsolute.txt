@@ -1,0 +1,5 @@
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\Debug\net5.0\SkylerCommon.csprojAssemblyReference.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\Debug\net5.0\SkylerCommon.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\Debug\net5.0\SkylerCommon.AssemblyInfoInputs.cache
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\Debug\net5.0\SkylerCommon.AssemblyInfo.cs
+C:\Users\Raymond\source\repos\Skyler\SkylerCommon\obj\Debug\net5.0\SkylerCommon.csproj.CoreCompileInputs.cache

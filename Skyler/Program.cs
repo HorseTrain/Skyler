@@ -4,13 +4,14 @@ using SkylerCore.CPU;
 using SkylerGraphics.ContextHandler;
 using SkylerHLE;
 using SkylerHLE.Horizon;
+using SkylerHLE.Horizon.Execution;
 using SkylerHLE.Memory;
 using System;
 using static SkylerHLE.Switch;
 
 namespace Skyler
 {
-    public static class Program
+    public static class Program 
     {
         public static void Main(string[] args)
         {
@@ -22,10 +23,11 @@ namespace Skyler
             //string path = @"C:\Users\Raymond\Desktop\application\application.nro";
             //string path = @"C:\Users\Raymond\Desktop\application\Pong.nso";
             //string path = @"D:\Games\Roms\Super Mario Odyssey";
-            string path = @"D:\Games\Roms\Sonic Mania";
-            //string path = @"C:\Users\Raymond\Desktop\application\spacenx.nso";
+            //string path = @"D:\Games\Roms\Sonic Mania";
+            string path = @"C:\Users\Raymond\Desktop\application\spacenx.nso";
+            //string path = @"C:\Users\Raymond\Desktop\application\oxidgb.10-print.nso";
 #else
-            string path = args[0];
+            string path = @"C:\Users\Raymond\Desktop\application\oxidgb.10-print.nso";
 
             Debug.ProgramInDebugMode = true;
 #endif
@@ -37,13 +39,13 @@ namespace Skyler
 
             if (path.Contains("."))
             {
-                Debug.Log("Loading as Homebrew");
+                Debug.Log("Loading as Homebrew",LogLevel.High);
 
                 process.LoadExecutable(path);
             }
             else
             {
-                Debug.Log("Loading as Cart");
+                Debug.Log("Loading as Cart",LogLevel.High);
                 Debug.LogWarning("No RomFS support.");
 
                 process.LoadGame(path);
@@ -58,7 +60,9 @@ namespace Skyler
 
             FrameBuffers.MainFrameBuffer = MemoryMetaData.AddressSpaceBegin;
 
-            process.BeginProgram<UnicornCpuContext>();
+            Scheduler.ThreadGenerator = UnicornCpuContext.CreateContext;
+
+            process.BeginProgram();
         }
     }
 }

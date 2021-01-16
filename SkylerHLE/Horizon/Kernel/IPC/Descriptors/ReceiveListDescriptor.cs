@@ -11,6 +11,8 @@ namespace SkylerHLE.Horizon.IPC.Descriptors
         public ulong Address { get; set; }
         public ulong Size { get; set; }
 
+        public bool IsNotZero => Address != 0 && Size != 0;
+
         public ReceiveListDescriptor(MemoryReader reader)
         {
             ulong double0 = reader.ReadStruct<ulong>();

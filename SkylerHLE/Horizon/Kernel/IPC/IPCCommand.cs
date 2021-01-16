@@ -59,6 +59,8 @@ namespace SkylerHLE.Horizon.IPC
             int CDescriptorFlags = (word1 >> 10) & 0xF;
             bool EnableHandleDescriptor = ((word1 >> 31) & 1) == 1;
 
+            Console.WriteLine(word1);
+
             if (EnableHandleDescriptor)
             {
                 HandleDescriptor = new HandleDescriptor(reader);
@@ -131,14 +133,8 @@ namespace SkylerHLE.Horizon.IPC
             {
                 BinaryWriter Writer = new BinaryWriter(MS);
 
-                int Word0;
+                int Word0 = ((int)Type) | (((PointerDescriptors.Count & 0xf) << 16) | ((SendDescriptors.Count & 0xf) << 20) | ((ReceiveDescriptors.Count & 0xf) << 24) | ((ExchangeDescriptors.Count & 0xf) << 28));
                 int Word1;
-
-                Word0 = (int)Type;
-                Word0 |= (PointerDescriptors.Count & 0xf) << 16;
-                Word0 |= (SendDescriptors.Count & 0xf) << 20;
-                Word0 |= (ReceiveDescriptors.Count & 0xf) << 24;
-                Word0 |= (ExchangeDescriptors.Count & 0xf) << 28;
 
                 byte[] HandleData = new byte[0];
 
@@ -206,6 +202,26 @@ namespace SkylerHLE.Horizon.IPC
             }
 
             return ulong.MaxValue;
+        }
+
+        public (ulong Position, ulong Size) GetBufferType0x21()
+        {
+            if (PointerDescriptors.Count != 0 && PointerDescriptors[0].IsNotZero)
+            {
+                return (PointerDescriptors[0].Address, PointerDescriptors[0].Size);
+            }
+
+            return (0, 0);
+        }
+
+        public (ulong Position, ulong Size) GetBufferType0x22()
+        {
+            if (ReceiveLists.Count != 0 && ReceiveLists[0].IsNotZero)
+            {
+                return (ReceiveLists[0].Address, ReceiveLists[0].Size);
+            }
+
+            return (0, 0);
         }
     }
 }

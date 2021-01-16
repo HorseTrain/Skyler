@@ -1,4 +1,5 @@
-﻿using SkylerCommon.Debugging;
+﻿using OpenTK.Graphics.OpenGL;
+using SkylerCommon.Debugging;
 using SkylerCommon.Globals;
 using SkylerCommon.Memory;
 using SkylerCPU;
@@ -8,12 +9,15 @@ using SkylerHLE.Memory;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using static SkylerHLE.Switch;
 
 namespace SkylerHLE.Horizon
 {
     public class Process 
     {
+        //ew
+        public static Process MainProcess { get; set; }
         public ulong ProcessID          { get; set; }
 
         public bool InMemory            { get; set; } 
@@ -32,6 +36,8 @@ namespace SkylerHLE.Horizon
             ImageBase = MemoryMetaData.AddressSpaceBegin;
 
             ProgramStart = ImageBase;
+
+            MainProcess = this;
         }
 
         public void AddExecutable(IExecutable Executable) => Executables.Add(Executable);
@@ -121,7 +127,7 @@ namespace SkylerHLE.Horizon
                 {
                     IExecutable executable = LoadExecutable(cp, true);
 
-                    Debug.Log($"Uploaded NSO: {name}");
+                    Debug.Log($"Uploaded NSO: {name}",LogLevel.High);
 
                     Executables.Add(executable);
                 }
@@ -139,11 +145,30 @@ namespace SkylerHLE.Horizon
             LoadNSO("sdk");
         }
 
-        public void BeginProgram<T>() where T : CpuContext, new()
+        public void BeginProgram()
         {
-            KThread thread = MainOS.scheduler.CreateThread(new T(),this,ProgramStart,MemoryMetaData.StackTop,MemoryMetaData.TlsCollectionAddress,0,44);
+            while (!MainSwitch.ContextReady)
+            {
+                Thread.Yield();
+            }
+
+            KThread thread = MainOS.scheduler.CreateThread(this,ProgramStart,MemoryMetaData.StackTop,0,44);
 
             MainOS.scheduler.DetatchAndStartThread(thread.ID);
+        }
+
+        public byte[] DumpProgram()
+        {
+            List<byte> Out = new List<byte>();
+
+            MemoryReader reader = GlobalMemory.GetReader(ProgramStart);
+
+            for (ulong i = 0; i < ImageBase - ProgramStart; i++)
+            {
+                Out.Add(reader.ReadStruct<byte>());
+            }
+
+            return Out.ToArray();
         }
     }
 }

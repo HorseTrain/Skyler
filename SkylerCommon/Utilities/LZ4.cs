@@ -11,28 +11,28 @@ namespace SkylerCommon.Utilities
 {
     public class LZ4
     {
+        static int GetLength(int length,byte[] cmp, ref int cmpPos)
+        {
+            byte sum;
+
+            if (length == 0xf)
+            {
+                do
+                {
+                    length += sum = cmp[cmpPos++];
+                }
+                while (sum == 0xff);
+            }
+
+            return length;
+        }
+
         public static byte[] Decompress(byte[] cmp, int decLength)
         {
             var dec = new byte[decLength];
 
             int cmpPos = 0;
             int decPos = 0;
-
-            int GetLength(int length)
-            {
-                byte sum;
-
-                if (length == 0xf)
-                {
-                    do
-                    {
-                        length += sum = cmp[cmpPos++];
-                    }
-                    while (sum == 0xff);
-                }
-
-                return length;
-            }
 
             do
             {
@@ -42,7 +42,7 @@ namespace SkylerCommon.Utilities
                 int litCount = (token >> 4) & 0xf;
 
                 //Copy literal chunk
-                litCount = GetLength(litCount);
+                litCount = GetLength(litCount,cmp,ref cmpPos);
 
                 Buffer.BlockCopy(cmp, cmpPos, dec, decPos, litCount);
 
@@ -58,7 +58,7 @@ namespace SkylerCommon.Utilities
                 int back = cmp[cmpPos++] << 0 |
                            cmp[cmpPos++] << 8;
 
-                encCount = GetLength(encCount) + 4;
+                encCount = GetLength(encCount,cmp,ref cmpPos) + 4;
 
                 int encPos = decPos - back;
 

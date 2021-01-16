@@ -8,14 +8,21 @@ namespace SkylerHLE.Horizon.Service.LM
 {
     public class Logger : ICommandObject
     {
-        public Dictionary<ulong, ServiceCall> Calls { get; set; } = new Dictionary<ulong, ServiceCall>()
-        {
-
-        };
+        public Dictionary<ulong, ServiceCall> Calls { get; set; } = new Dictionary<ulong, ServiceCall>();
 
         public Logger()
         {
+            Calls = new Dictionary<ulong, ServiceCall>()
+            {
+                {0, Call }
+            };
+        }
 
+        public ulong Call(CallContext context)
+        {
+            context.PrintStubbed();
+
+            return 0;
         }
     }
 }

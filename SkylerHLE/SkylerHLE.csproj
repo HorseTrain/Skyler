@@ -15,17 +15,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Horizon\Service\ServiceObjects\**" />
+    <EmbeddedResource Remove="Horizon\Service\ServiceObjects\**" />
+    <None Remove="Horizon\Service\ServiceObjects\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SkylerCommon\SkylerCommon.csproj" />
     <ProjectReference Include="..\SkylerCPU\SkylerCPU.csproj" />
     <ProjectReference Include="..\SkylerGraphics\SkylerGraphics.csproj" />
   </ItemGroup>
 
-<<<<<<< HEAD
-=======
   <ItemGroup>
-    <Folder Include="Horizon\Service\Set\" />
-    <Folder Include="Horizon\Service\ServiceObjects\NewFolder\" />
+    <Folder Include="Horizon\Exporter\" />
   </ItemGroup>
 
->>>>>>> parent of 62d2423... Added More!!
 </Project>

@@ -23,24 +23,30 @@ namespace SkylerHLE.Memory
 
         public void MapMemory(ulong Address, ulong Size, MemoryPermission Permission,MemoryType Type)
         {
-            if (Address != MemoryMetaData.PageRoundDown(Address))
-               Debug.LogWarning("Invalid Page Size, Automatically Fixing.");
-
-            if (Size != MemoryMetaData.PageRoundUp(Size))
-               Debug.LogWarning("Invalid Page Size, Automatically Fixing.");
-
-            Address = MemoryMetaData.PageRoundDown(Address);
-            Size = MemoryMetaData.PageRoundUp(Size);
-            ulong Top = Address + Size;
-
-            for (ulong i = Address; i < Top; i += MemoryMetaData.PageSize)
+            lock (PageTables)
             {
-                RequestPage(i).permission = Permission;
-                RequestPage(i).memorytype = Type;
-                RequestPage(i).mapped = true;
-            }
+                if (false)
+                {
+                    if (Address != MemoryMetaData.PageRoundDown(Address))
+                        Debug.LogWarning("Invalid Page Size, Automatically Fixing.");
 
-            Debug.Log($"Mapped Memory: {StringTools.FillStringBack(Permission,' ',20)} {StringTools.FillStringBack(Type, ' ', 15)},{StringTools.FillStringBack(Address, ' ', 15)}, With Size: {StringTools.FillStringBack(Size, ' ', 20)}");
+                    if (Size != MemoryMetaData.PageRoundUp(Size))
+                        Debug.LogWarning("Invalid Page Size, Automatically Fixing.");
+                }
+
+                Address = MemoryMetaData.PageRoundDown(Address);
+                Size = MemoryMetaData.PageRoundUp(Size);
+                ulong Top = Address + Size;
+
+                for (ulong i = Address; i < Top; i += MemoryMetaData.PageSize)
+                {
+                    RequestPage(i).permission = Permission;
+                    RequestPage(i).memorytype = Type;
+                    RequestPage(i).mapped = true;
+                }
+
+                Debug.Log($"Mapped Memory: {StringTools.FillStringBack(Permission, ' ', 20)} {StringTools.FillStringBack(Type, ' ', 15)},{StringTools.FillStringBack(Address, ' ', 15)}, With Size: {StringTools.FillStringBack(Size, ' ', 20)}", LogLevel.Neutral);
+            }
         }
 
         public MemoryMapInfo GetMemoryInfo(ulong Address)
@@ -121,6 +127,28 @@ namespace SkylerHLE.Memory
             GlobalMemory.BaseMemory = (IntPtr)BaseAddress;
 
             GlobalMemory.SetBaseAddress(BaseAddress);
+        }
+
+        public void SetMemoryATTR(ulong Address, ulong Size, uint Mask, uint Value)
+        {
+            lock (PageTables)
+            {
+                Address = MemoryMetaData.PageRoundDown(Address);
+                Size = MemoryMetaData.PageRoundUp(Size);
+                ulong Top = Address + Size;
+
+                Mask = ~Mask;
+
+                for (ulong i = Address; i < Top; i += MemoryMetaData.PageSize)
+                {
+                    uint Attr = RequestPage(i).Attr;
+
+                    Attr &= Mask;
+                    Attr |= Value;
+
+                    RequestPage(i).Attr = Attr;
+                }
+            }
         }
 
         //Maybe not the best place.

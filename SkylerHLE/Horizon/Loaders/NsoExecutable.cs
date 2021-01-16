@@ -84,6 +84,8 @@ namespace SkylerHLE.Horizon.Loaders
 
         public static byte[] GetNsoCodeSource(byte[] Buffer, bool Compressed,int DecompressedSize)
         {
+            Console.WriteLine(DecompressedSize);
+
             if (Compressed)
             {
                 Buffer = LZ4.Decompress(Buffer, DecompressedSize);

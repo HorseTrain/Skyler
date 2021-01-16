@@ -1,7 +1,7 @@
 ﻿using SkylerCommon.Utilities;
 using SkylerHLE.Horizon.Execution;
 using SkylerHLE.Horizon.Handles;
-using SkylerHLE.Horizon.Service.AppletAE;
+using SkylerHLE.Horizon.Service.AM;
 using SkylerHLE.Horizon.Service.Sessions;
 
 namespace SkylerHLE.Horizon

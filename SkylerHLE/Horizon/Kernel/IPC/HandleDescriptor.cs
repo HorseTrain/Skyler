@@ -36,26 +36,22 @@ namespace SkylerHLE.Horizon.IPC
             }
         }
 
-        public HandleDescriptor(uint[] Copy, uint[] Move)
+        HandleDescriptor()
         {
-            ToCopy = Copy ?? throw new ArgumentNullException(nameof(Copy));
-            ToMove = Move ?? throw new ArgumentNullException(nameof(Move));
+
         }
 
-        public HandleDescriptor(uint[] Copy, uint[] Move, ulong PId) : this(Copy, Move)
+        public static HandleDescriptor MakeCopy(uint Handle) => new HandleDescriptor()
         {
-            this.PID = PId;
+            ToCopy = new uint[] {Handle},
+            ToMove = new uint[0]
+        };
 
-            SendCurrentPID = true;
-        }
-
-        public static HandleDescriptor MakeCopy(uint Handle) => new HandleDescriptor(
-                new uint[] { Handle },
-                new uint[0]);
-
-        public static HandleDescriptor MakeMove(uint Handle) => new HandleDescriptor(
-                new uint[0],
-                new uint[] { Handle });
+        public static HandleDescriptor MakeMove(uint Handle) => new HandleDescriptor()
+        {
+            ToMove = new uint[] {Handle},
+            ToCopy = new uint[0]
+        };
 
         public byte[] GenerateResponse()
         {

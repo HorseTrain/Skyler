@@ -6,6 +6,8 @@ using System.Text;
 
 namespace SkylerCPU
 {
+    public delegate CpuContext CreateThread();
+
     public class CpuContext
     {
         public object ThreadInformation { get; set; }
@@ -14,14 +16,14 @@ namespace SkylerCPU
 
         protected virtual ulong GetX(ulong index)
         {
-            Debug.ThrowNotImplementedException("");
+            throw new NotImplementedException();
 
             return 0;
         }
 
         protected virtual void SetX(ulong index, ulong Value)
         {
-            Debug.ThrowNotImplementedException("");
+            throw new NotImplementedException();
         }
 
         uint GetW(ulong index) => (uint)GetX(index);

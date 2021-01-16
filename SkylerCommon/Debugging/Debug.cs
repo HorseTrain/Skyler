@@ -4,32 +4,47 @@ using System.Text;
 
 namespace SkylerCommon.Debugging
 {
+    public enum LogLevel
+    {
+        Low,
+        Neutral,
+        High
+    }
+
     public static class Debug
     {
-        public static bool ProgramInDebugMode { get; set; } = true;
+        public static LogLevel CurrentLevel     { get; set; } = LogLevel.Low;
+        public static bool ProgramInDebugMode   { get; set; } = true;
+        static object OneAtATime                { get; set; } = new object();
 
         //TODO: Add importance checks to not log everything.
-        static void LogWithColor(object message,ConsoleColor color = ConsoleColor.White)
+        static void LogWithColor(object message,ConsoleColor color = ConsoleColor.White,LogLevel Level = LogLevel.Neutral)
         {
-            Console.ForegroundColor = color;
-
-            //TODO: Add time markers.
-
-            if (ProgramInDebugMode)
+            if (Level >= CurrentLevel)
             {
-                Console.WriteLine(message);
-            }
+                lock (OneAtATime)
+                {
+                    Console.ForegroundColor = color;
 
-            Console.ForegroundColor = ConsoleColor.White;
+                    //TODO: Add time markers.
+
+                    if (ProgramInDebugMode)
+                    {
+                        Console.WriteLine(message);
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
         }
 
-        public static void LogWarning(object message) => LogWithColor($"Warning: {message}",ConsoleColor.Yellow);
+        public static void LogWarning(object message,LogLevel Level = LogLevel.Neutral) => LogWithColor($"Warning: {message}",ConsoleColor.Yellow,Level);
 
-        public static void Log(string message) => LogWithColor(message,ConsoleColor.White);
+        public static void Log(string message, LogLevel Level = LogLevel.Neutral) => LogWithColor(message,ConsoleColor.White,Level);
 
         public static void LogError(object message, bool Crash = false)
         {
-            LogWithColor($"Error: {message}", ConsoleColor.Red);
+            LogWithColor($"Error: {message}", ConsoleColor.Red,LogLevel.High);
 
             if (Crash)
                 Debug.Crash();
@@ -39,11 +54,17 @@ namespace SkylerCommon.Debugging
         {
             LogError("Indefinite emulation hault.");
 
-            while (true) ;
+            ThrowNotImplementedException();
         }
 
         public static void ThrowException(Exception exception) => throw exception;
 
-        public static void ThrowNotImplementedException(string message = "") => ThrowException(new NotImplementedException(message));
+        public static void ThrowNotImplementedException(object message = null)
+        {
+            if (message != null)
+                ThrowException(new NotImplementedException(message.ToString()));
+
+            ThrowException(new NotImplementedException());
+        }
     }
 }
