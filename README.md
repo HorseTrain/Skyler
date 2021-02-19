@@ -1,7 +1,7 @@
 # Skyler Emulator
  Skyler Nintendo Switch Emulator
 
--Releases can be found here https://github.com/raymondMataka/Project-Skyler/releases
+-Releases can be found here https://github.com/raymondMataka/Skyler/releases/tag/0.01
 
 This is a very experimental Nintendo Switch Emulator.
 
